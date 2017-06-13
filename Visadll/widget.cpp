@@ -15,16 +15,12 @@ static unsigned char buffer[100];
 static char stringinput[512];
 
 //Next is add by me
-static ViString DevCmd;
-static ViRsrc DevName;
-
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    this->setWindowIcon(QIcon(":/MainW/search"));
 }
 
 Widget::~Widget()
@@ -35,6 +31,8 @@ Widget::~Widget()
 
 void Widget::on_bt_Search_clicked()
 {
+    static ViString DevCmd; //指令字符串
+
     int DevIte=1;
 
     //获取新数据前清空列表框和下拉框
@@ -44,21 +42,15 @@ void Widget::on_bt_Search_clicked()
     status=viOpenDefaultRM (&defaultRM);
     if (status < VI_SUCCESS)
     {
-     //  printf("Could not open a session to the VISA Resource Manager!\n");
-     //  exit (EXIT_FAILURE);
         QMessageBox::information(this,tr("Information"),tr("Could no open a session to the VISA Resource!"),QMessageBox::Ok);
     }
     else
     {
         char myCmd[]={'?','*','I','N','S','T','R','\0'};
-
-      //  char myCmd[]="?*INSTR";
         DevCmd=myCmd;
         status = viFindRsrc (defaultRM, DevCmd, &findList, &numInstrs, instrDescriptor);
         if (status < VI_SUCCESS)
         {
-
-           // printf ("An error occurred while finding resources.\nHit enter to continue.");
             QMessageBox::information(this,tr("Information"),tr("An error occurred while finding resources."),QMessageBox::Ok);
          //  fflush(stdin);
          //  getchar();
@@ -133,88 +125,116 @@ void Widget::on_bt_Search_clicked()
 
 void Widget::on_bt_SendCMD_clicked()
 {
-    ui->textEdit_Receive->clear();
+    static ViRsrc DevName;  //设备名称
 
-    status=viOpenDefaultRM (&defaultRM);
+    ui->textEdit_Receive->clear();  //清空文本框
+
+    status=viOpenDefaultRM (&defaultRM);    //返回与默认资源管理器的通话
     if (status < VI_SUCCESS)
     {
-     //  printf("Could not open a session to the VISA Resource Manager!\n");
-     //  exit (EXIT_FAILURE);
+        //失败处理
         QMessageBox::information(this,tr("Information"),tr("Could no open a session to the VISA Resource!"),QMessageBox::Ok);
+        return;
+    }
+
+    //获取设备名称
+    QByteArray ba=ui->comboBox->currentText().toLatin1();
+    DevName=ba.data();
+
+    //打开设备端口
+    status = viOpen (defaultRM, DevName, VI_NULL, VI_NULL, &instr);
+    if (status < VI_SUCCESS)
+    {
+        QMessageBox::information(this,tr("Information"),tr("Cannot open a session to the device."),QMessageBox::Ok);
+    }
+
+    /* 设置连接超时时间为5s    Set timeout value to 5000 milliseconds (5 seconds).*/
+    status = viSetAttribute (instr, VI_ATTR_TMO_VALUE, 5000);   //设置资源属性状态值。
+
+    int iCmdLeng=ui->lineEdit_Cmd->text().length(); //获取指令长度
+    if(iCmdLeng==0)
+    {
+        QMessageBox::warning(this,tr("Warning!"),tr("Please enter you Command!"),QMessageBox::Ok);
     }
     else
     {
-        QByteArray ba=ui->comboBox->currentText().toLatin1();
-        DevName=ba.data();
+        QByteArray baCmd=ui->lineEdit_Cmd->text().toLatin1();   //获取指令
 
-        status = viOpen (defaultRM, DevName, VI_NULL, VI_NULL, &instr);
+        //指令拷贝进入char型数组
+        for(int i=0;i<=iCmdLeng;i++)
+        {
+            stringinput[i]=baCmd[i];
+            if(i==iCmdLeng)
+                stringinput[i]='\0';
+        }
+
+        //指令写入
+        status = viWrite (instr, (ViBuf)stringinput, (ViUInt32)strlen(stringinput), &writeCount);
         if (status < VI_SUCCESS)
         {
-          // printf ("Cannot open a session to the device.\n");
-            QMessageBox::information(this,tr("Information"),tr("Cannot open a session to the device."),QMessageBox::Ok);
-           //goto Close;
+            //写入失败处理
+            QMessageBox::information(this,tr("Information"),tr("Error writing to the device."),QMessageBox::Ok);
         }
-        /*
-        * Set timeout value to 5000 milliseconds (5 seconds).
-        */
-        status = viSetAttribute (instr, VI_ATTR_TMO_VALUE, 5000);
 
-        int iCmdLeng;
-        iCmdLeng=ui->lineEdit_Cmd->text().length();
-        if(iCmdLeng==0)
+        //读取数据
+        status = viRead (instr, buffer, 100, &retCount);
+        if (status < VI_SUCCESS)
         {
-            QMessageBox::warning(this,tr("Warning!"),tr("Please enter you Command!"),QMessageBox::Ok);
+            //读取失败处理
+            QMessageBox::information(this,tr("Information"),tr("Error reading a response from the device."),QMessageBox::Ok);
         }
         else
         {
-            QByteArray baCmd=ui->lineEdit_Cmd->text().toLatin1();
+            QString strbuffer;
+            strbuffer=(char*)buffer;
 
-            for(int i=0;i<=iCmdLeng;i++)
-            {
-                stringinput[i]=baCmd[i];
-                if(i==iCmdLeng)
-                    stringinput[i]='\0';
-            }
-            status = viWrite (instr, (ViBuf)stringinput, (ViUInt32)strlen(stringinput), &writeCount);
-            if (status < VI_SUCCESS)
-            {
-            //  printf("Error writing to the device\n");
-              QMessageBox::information(this,tr("Information"),tr("Error writing to the device."),QMessageBox::Ok);
-            }
-
-            status = viRead (instr, buffer, 100, &retCount);
-            if (status < VI_SUCCESS)
-            {
-              // printf("Error reading a response from the device\n");
-               QMessageBox::information(this,tr("Information"),tr("Error reading a response from the device."),QMessageBox::Ok);
-            }
-            else
-            {
-              // printf("Data read: %*s\n",retCount,buffer);
-                QString strbuffer;
-
-                /*
-                int bufLen;
-                QString strtmp;
-
-                bufLen=strlen(reinterpret_cast<const char*>(buffer));
-
-                for(int i=0;i<bufLen;i++)
-                {
-                    strtmp=QString("%1").arg(buffer[i],0,16);
-                    if(strtmp.length()==bufLen)
-                        strbuffer.append("0");
-                    strbuffer.append(strtmp);
-                }
-                */
-
-                strbuffer=(char*)buffer;
-
-                ui->textEdit_Receive->setEnabled(true);
-                ui->textEdit_Receive->setText(tr("Data Length: %1\nData read: ").arg(retCount)+strbuffer);
-            }
-            viClose(instr);
-            viClose(defaultRM);
+            ui->textEdit_Receive->setEnabled(true);
+            ui->textEdit_Receive->append(tr("Data Length: %1").arg(retCount));  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
+            ui->textEdit_Receive->append(tr("Data read: ")+strbuffer);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
         }
+
+        viClose(instr);         //关闭同设备的连接
+        viClose(defaultRM);     //关闭与默认资源管理器的通话
     }
+
+}
+
+#define MAX_SCPI_LEN    255
+#define DEFAULT_TMO     5000
+
+void Widget::on_pushButton_clicked()
+{
+//       /* Visa Session*/
+//       ViStatus nRetStatus;
+//       ViSession rmSession = 0;
+//       ViSession pInstrHandle;
+
+//       /* Visa communicate buffer */
+//       ViByte wrBuff[MAX_SCPI_LEN];
+//       ViByte rdBuff[MAX_SCPI_LEN];
+
+//       int retCount = 0;
+
+//       /* open device and get visa Handle */
+
+         //打开与默认资源管理器的通话
+//       nRetStatus = viOpenDefaultRM( &rmSession);
+
+         //打开设备
+//       nRetStatus = viOpen( rmSession, "TCPIP0::127.0.0.1::5000::SOCKET", VI_NULL, VI_NULL, &pInstrHandle);
+
+//       /* set visa Format */
+//       nRetStatus = viSetAttribute( pInstrHandle, VI_ATTR_TMO_VALUE, DEFAULT_TMO);
+//       nRetStatus = viSetAttribute( pInstrHandle, VI_ATTR_SUPPRESS_END_EN, VI_FALSE);
+//       nRetStatus = viSetAttribute( pInstrHandle, VI_ATTR_SEND_END_EN, VI_FALSE);
+
+//       /* Query device IDN */
+//       nRetStatus = viQueryf( pInstrHandle, "*IDN?\n", "%s", rdBuff);
+
+//        ui->textEdit_Receive->setText(rdBuff);
+////       cout << rdBuff << endl;
+
+//       /* Close */
+//       viClose( pInstrHandle);
+//       viClose( rmSession);
 }
