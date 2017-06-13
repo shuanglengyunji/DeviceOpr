@@ -1,0 +1,33 @@
+#include "winver.h"
+
+IDI_ICON1               ICON    DISCARDABLE     "labview.ico"
+
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1,0,0,0
+ FILEFLAGS 0x0L
+ FILEFLAGSMASK 0x3fL
+ FILEOS 0x00040004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004b0"
+        BEGIN
+            VALUE "CompanyName", "National Instruments Corporation"
+            VALUE "FileDescription", "LabVIEW Instrument"
+            VALUE "FileVersion", "12.0.0"
+            VALUE "LegalCopyright", "Copyright (C) 2013 National Instruments Corporation."
+            VALUE "InternalName", "LabVIEW"
+            VALUE "OriginalFilename", "labview.exe"
+            VALUE "ProductName", "National Instruments LabVIEW"
+            VALUE "ProductVersion", "12.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0, 1200
+    END
+END
