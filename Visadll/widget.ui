@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>680</width>
+    <width>807</width>
     <height>460</height>
    </rect>
   </property>
@@ -41,7 +41,7 @@
     <rect>
      <x>390</x>
      <y>20</y>
-     <width>271</width>
+     <width>401</width>
      <height>331</height>
     </rect>
    </property>
@@ -77,7 +77,7 @@
   </widget>
   <widget class="QTextEdit" name="textEdit_Receive">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -87,8 +87,11 @@
      <height>231</height>
     </rect>
    </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="get_fre">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -98,7 +101,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>获取频率</string>
    </property>
   </widget>
  </widget>

@@ -22,7 +22,7 @@ private slots:
 
     void on_bt_SendCMD_clicked();
 
-    void on_pushButton_clicked();
+    void on_get_fre_clicked();
 
 private:
     Ui::Widget *ui;
