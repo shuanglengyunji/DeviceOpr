@@ -13,7 +13,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        widget.cpp
+        widget.cpp \
+    widget_measure.cpp
 
 HEADERS  += widget.h\
           ../Ni/include/visa.h
@@ -22,11 +23,7 @@ FORMS    += widget.ui
 
 LIBS     += ../Ni/lib/msc/visa32.lib
 
-
 win32:RC_FILE  += AppIco.rc
 
-OTHER_FILES += \
-    AppIco.rc
+OTHER_FILES +=
 
-RESOURCES += \
-    myRes.qrc

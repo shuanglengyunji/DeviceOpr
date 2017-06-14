@@ -1,20 +1,7 @@
 #include "widget.h"
 #include "ui_widget.h"
-#include <QMessageBox>
 
-#include "../Ni/include/visa.h"
 
-static char instrDescriptor[VI_FIND_BUFLEN];
-static ViUInt32 numInstrs;
-static ViFindList findList;
-static ViSession defaultRM, instr;
-static ViStatus status;
-static ViUInt32 retCount;
-static ViUInt32 writeCount;
-static unsigned char buffer[100];
-static char stringinput[512];
-
-//Next is add by me
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -51,8 +38,10 @@ void Widget::on_bt_Search_clicked()
     }
 
     char myCmd[]={'?','*','I','N','S','T','R','\0'};
+//    char myCmd[]={'T','C','P','I','P','?','*','I','N','S','T','R','\0'};    //TCPIP?*INSTR
     DevCmd=myCmd;
     status = viFindRsrc (defaultRM, DevCmd, &findList, &numInstrs, instrDescriptor);    //查询VISA系统进行资源定位
+
     if (status < VI_SUCCESS)
     {
         QMessageBox::information(this,tr("Information"),tr("An error occurred while finding resources."),QMessageBox::Ok);

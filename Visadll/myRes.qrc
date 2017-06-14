@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/MainW">
-        <file alias="search">search.ico</file>
-    </qresource>
-</RCC>

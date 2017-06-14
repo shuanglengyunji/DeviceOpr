@@ -5,6 +5,9 @@
 #include <QTimer>
 #include <QDir>
 #include <QTextStream>
+#include <QMessageBox>
+
+#include "../Ni/include/visa.h"
 
 
 namespace Ui {
@@ -40,6 +43,19 @@ private:
     Ui::Widget *ui;
 
     QTimer testTimer;
+
+
+    //连接设备所需
+    char instrDescriptor[VI_FIND_BUFLEN];
+    ViUInt32 numInstrs;
+    ViFindList findList;
+    ViSession defaultRM, instr;
+    ViStatus status;
+    ViUInt32 retCount;
+    ViUInt32 writeCount;
+    unsigned char buffer[100];
+    char stringinput[512];
+
 };
 
 #endif // WIDGET_H
