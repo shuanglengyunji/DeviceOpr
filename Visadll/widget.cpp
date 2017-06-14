@@ -8,9 +8,6 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-
-    //定时器槽函数连接
-    connect(&testTimer,SIGNAL(timeout()), this, SLOT(Timing()));
 }
 
 Widget::~Widget()
@@ -112,112 +109,21 @@ void Widget::on_bt_Search_clicked()
         ui->Voltage2->setEnabled(true);
         ui->Voltage_Set->setEnabled(true);
         ui->CMD_TINTerval->setEnabled(true);
+        ui->Time_Interval->setEnabled(true);
+        ui->Timer_button->setEnabled(true);
+        ui->set_timer->setEnabled(true);
     }
 
 }
 
-//发送指令不回读
-void Widget::on_bt_SendCMD_clicked()
+//防止文本框内容过多
+void Widget::on_textEdit_Receive_textChanged()
 {
-    int iCmdLeng;
-    iCmdLeng=ui->lineEdit_Cmd->text().length();
-    if(iCmdLeng==0)
-    {
-        QMessageBox::warning(this,tr("Warning!"),tr("Please enter you Command!"),QMessageBox::Ok);
-    }
-    else
-    {
-        Send_No_Get(ui->lineEdit_Cmd->text());
-    }
+    int length = ui->textEdit_Receive->toPlainText().length();
+    if(length>2000)
+        ui->textEdit_Receive->clear();
 }
 
-//发送指令且回读
-void Widget::on_bt_SendCMD_Get_clicked()
-{
-    ui->textEdit_Receive->clear();  //清空文本框
-
-    int iCmdLeng;
-
-    iCmdLeng=ui->lineEdit_Cmd->text().length();
-
-    if(iCmdLeng==0)
-    {
-        QMessageBox::warning(this,tr("Warning!"),tr("Please enter you Command!"),QMessageBox::Ok);
-        return;
-    }
-
-    QString receive = Send_And_Get(ui->lineEdit_Cmd->text());
-
-    ui->textEdit_Receive->append(receive);  //清空文本框
-}
-
-//发送门限电压设置指令
-void Widget::on_Voltage_Set_clicked()
-{
-    double vol1 = ui->Voltage1->text().toDouble();
-    QString volinput1 = "INPut1:LEVel:ABSolute " + QString::number(vol1,10,2);
-    Send_No_Get(volinput1);
-
-    double vol2 = ui->Voltage2->text().toDouble();
-    QString volinput2 = "INPut2:LEVel:ABSolute " + QString::number(vol2,10,2);
-    Send_No_Get(volinput2);
-}
-
-
-
-void Widget::on_get_fre_clicked()
-{
-    ui->get_fre->setEnabled(false);
-
-    double number = Get_Number("MEASure:SCALar:VOLTage:FREQuency?");
-    QString str = QString("frequency: %1").arg(number, 0,'r',12);
-    ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
-    str.clear();
-
-    ui->get_fre->setEnabled(true);
-}
-
-void Widget::on_Time_Interval_clicked()
-{
-    ui->get_fre->setEnabled(false);
-
-    double time = Get_Number("MEASure:SCALar:VOLTage:TINTerval?");
-    QString str = QString("time interval: %1").arg(time, 0,'r',12);
-    ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
-    str.clear();
-
-    ui->get_fre->setEnabled(true);
-}
-
-void Widget::on_Timer_button_clicked()
-{
-    static int flag = 0;    //0:没开始   1：开始
-
-    if(flag == 0)
-    {
-        testTimer.start(1000); //1s
-        flag = 1;
-        ui->Timer_button->setText("停止定时");
-    }
-    else
-    {
-        if (testTimer.isActive() )
-        {
-            testTimer.stop();
-            flag = 0;
-            ui->Timer_button->setText("开始定时");
-        }
-    }
-
-}
-
-void Widget::Timing()
-{
-    double time = Get_Number("MEASure:SCALar:VOLTage:TINTerval?");
-    QString str = QString("time interval: %1").arg(time, 0,'r',12);
-    ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
-    str.clear();
-}
 
 
 //    //创建文件路径和文件
@@ -298,17 +204,4 @@ void Widget::Timing()
 //       /* Close */
 //       viClose( pInstrHandle);
 //       viClose( rmSession);
-
-
-
-
-
-
-
-
-
-
-
-
-
 

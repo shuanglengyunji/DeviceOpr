@@ -76,9 +76,6 @@ QString Widget::Send_And_Get(QString cmd)
 //发送指令不读取回参
 void Widget::Send_No_Get(QString cmd)
 {
-
-    ui->textEdit_Receive->clear();  //清空文本框
-
     status=viOpenDefaultRM (&defaultRM);    //返回与默认资源管理器的通话
     if (status < VI_SUCCESS)
     {

@@ -36,8 +36,6 @@ private slots:
 
     void on_bt_SendCMD_clicked();
 
-    void on_get_fre_clicked();
-
     void on_Time_Interval_clicked();
 
     void on_Timer_button_clicked();
@@ -47,6 +45,10 @@ private slots:
     void on_bt_SendCMD_Get_clicked();
 
     void on_Voltage_Set_clicked();
+
+    void on_CMD_TINTerval_clicked();
+
+    void on_textEdit_Receive_textChanged();
 
 private:
     Ui::Widget *ui;
