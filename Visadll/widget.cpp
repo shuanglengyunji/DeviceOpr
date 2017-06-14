@@ -21,6 +21,9 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+
+    //定时器槽函数连接
+    connect(&testTimer,SIGNAL(timeout()), this, SLOT(Timing()));
 }
 
 Widget::~Widget()
@@ -193,18 +196,16 @@ void Widget::on_bt_SendCMD_clicked()
 
 }
 
-
-
-void Widget::on_get_fre_clicked()
+double Widget::Get_Number(QString cmd)
 {
-    ui->get_fre->setEnabled(false);
+    double number = 0;
 
     status=viOpenDefaultRM (&defaultRM);    //返回与默认资源管理器的通话
     if (status < VI_SUCCESS)
     {
         //失败处理
         QMessageBox::information(this,tr("Information"),tr("Could no open a session to the VISA Resource!"),QMessageBox::Ok);
-        return;
+        return -1;
     }
 
     //获取设备名称
@@ -222,7 +223,7 @@ void Widget::on_get_fre_clicked()
     status = viSetAttribute (instr, VI_ATTR_TMO_VALUE, 5000);   //设置资源属性状态值
 
     //定义指令
-    QByteArray baCmd = "MEASure:SCALar:VOLTage:FREQuency?";
+    QByteArray baCmd = cmd.toLatin1();
 
     int iCmdLeng = baCmd.length(); //获取指令长度
 
@@ -252,19 +253,102 @@ void Widget::on_get_fre_clicked()
     else
     {
         QString strbuffer=(char*)buffer;
-
-        double number = strbuffer.toDouble();
-        QString str = QString("frequency: %1").arg(number, 0,'r',12);
-        ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
-        str.clear();
+        number = strbuffer.toDouble();
 
     }
 
     viClose(instr);         //关闭同设备的连接
     viClose(defaultRM);     //关闭与默认资源管理器的通话
 
-    ui->get_fre->setEnabled(true);
+    return number;
+}
 
+void Widget::on_get_fre_clicked()
+{
+    ui->get_fre->setEnabled(false);
+
+    double number = Get_Number("MEASure:SCALar:VOLTage:FREQuency?");
+    QString str = QString("frequency: %1").arg(number, 0,'r',12);
+    ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
+    str.clear();
+
+    ui->get_fre->setEnabled(true);
+}
+
+void Widget::on_Time_Interval_clicked()
+{
+    ui->get_fre->setEnabled(false);
+
+    double time = Get_Number("MEASure:SCALar:VOLTage:TINTerval?");
+    QString str = QString("time interval: %1").arg(time, 0,'r',12);
+    ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
+    str.clear();
+
+    ui->get_fre->setEnabled(true);
+}
+
+void Widget::on_Timer_button_clicked()
+{
+    static int flag = 0;    //0:没开始   1：开始
+
+    if(flag == 0)
+    {
+        testTimer.start(1000); //1s
+        flag = 1;
+        ui->Timer_button->setText("停止定时");
+    }
+    else
+    {
+        if (testTimer.isActive() )
+        {
+            testTimer.stop();
+            flag = 0;
+            ui->Timer_button->setText("开始定时");
+        }
+    }
+
+}
+
+void Widget::Timing()
+{
+    double time = Get_Number("MEASure:SCALar:VOLTage:TINTerval?");
+    QString str = QString("time interval: %1").arg(time, 0,'r',12);
+    ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
+    str.clear();
+
+//    //创建文件路径和文件
+//    QDir TEST;
+//    bool exist = TEST.exists("TEST");
+//    if(!exist)
+//        TEST.mkdir("TEST");
+//    QString fileName = "TEST/1.txt";
+//    QFile file(fileName);
+
+//    //打开文件
+//    if(!file.open(QIODevice::WriteOnly  | QIODevice::Text|QIODevice::Append))
+//    {
+//        QMessageBox::warning(this,"sdf","can't open",QMessageBox::Yes);
+//    }
+
+//    //写入数据
+//    QTextStream out(&file);
+//    out << str  << "\n" ;
+
+//    //关闭文件
+//    file.close();
+
+//    QString sFilePath = "C:\\test.txt";
+
+//    QFile file(sFilePath);
+//    //方式：Append为追加，WriteOnly，ReadOnly
+//    if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
+//        QMessageBox::critical(NULL, "提示", "无法创建文件");
+//        return;
+//    }
+//    QTextStream out(&file);
+//    out<<"要写入内容"<<endl;
+//    out.flush();
+//    file.close();
 }
 
 /*
@@ -311,6 +395,10 @@ void Widget::on_get_fre_clicked()
 //       /* Close */
 //       viClose( pInstrHandle);
 //       viClose( rmSession);
+
+
+
+
 
 
 

@@ -2,6 +2,9 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QTimer>
+#include <QDir>
+#include <QTextStream>
 
 
 namespace Ui {
@@ -24,8 +27,19 @@ private slots:
 
     void on_get_fre_clicked();
 
+    void on_Time_Interval_clicked();
+
+    void on_Timer_button_clicked();
+
+
+    double Get_Number(QString cmd);
+
+    void Timing();
+
 private:
     Ui::Widget *ui;
+
+    QTimer testTimer;
 };
 
 #endif // WIDGET_H
