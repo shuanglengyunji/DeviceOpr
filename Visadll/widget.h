@@ -23,6 +23,14 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 
+    //操作函数
+    QString Send_And_Get(QString cmd);  //发送指令读取回参
+
+    void Send_No_Get(QString cmd);      //发送指令不读取回参
+
+    double Get_Number(QString cmd); //获取1个数据
+
+
 private slots:
     void on_bt_Search_clicked();
 
@@ -34,10 +42,11 @@ private slots:
 
     void on_Timer_button_clicked();
 
-
-    double Get_Number(QString cmd);
-
     void Timing();
+
+    void on_bt_SendCMD_Get_clicked();
+
+    void on_Voltage_Set_clicked();
 
 private:
     Ui::Widget *ui;

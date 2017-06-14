@@ -14,7 +14,8 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         widget.cpp \
-    widget_measure.cpp
+    widget_measure.cpp \
+    widget_cmd.cpp
 
 HEADERS  += widget.h\
           ../Ni/include/visa.h

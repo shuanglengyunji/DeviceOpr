@@ -106,151 +106,64 @@ void Widget::on_bt_Search_clicked()
     if(ui->comboBox->count()>0)
     {
         ui->bt_SendCMD->setEnabled(true);
+        ui->bt_SendCMD_Get->setEnabled(true);
         ui->lineEdit_Cmd->setEnabled(true);
+        ui->Voltage1->setEnabled(true);
+        ui->Voltage2->setEnabled(true);
+        ui->Voltage_Set->setEnabled(true);
+        ui->CMD_TINTerval->setEnabled(true);
     }
 
 }
 
-
+//发送指令不回读
 void Widget::on_bt_SendCMD_clicked()
 {
-    ui->textEdit_Receive->clear();  //清空文本框
-
-    status=viOpenDefaultRM (&defaultRM);    //返回与默认资源管理器的通话
-    if (status < VI_SUCCESS)
-    {
-        //失败处理
-        QMessageBox::information(this,tr("Information"),tr("Could no open a session to the VISA Resource!"),QMessageBox::Ok);
-        return;
-    }
-
-    //获取设备名称
-    QByteArray ba=ui->comboBox->currentText().toLatin1();
-    ViRsrc DevName=ba.data();
-
-    //打开设备端口
-    status = viOpen (defaultRM, DevName, VI_NULL, VI_NULL, &instr);
-    if (status < VI_SUCCESS)
-    {
-        QMessageBox::information(this,tr("Information"),tr("Cannot open a session to the device."),QMessageBox::Ok);
-    }
-
-    /* 设置连接超时时间为5s    Set timeout value to 5000 milliseconds (5 seconds).*/
-    status = viSetAttribute (instr, VI_ATTR_TMO_VALUE, 5000);   //设置资源属性状态值。
-
-    int iCmdLeng=ui->lineEdit_Cmd->text().length(); //获取指令长度
+    int iCmdLeng;
+    iCmdLeng=ui->lineEdit_Cmd->text().length();
     if(iCmdLeng==0)
     {
         QMessageBox::warning(this,tr("Warning!"),tr("Please enter you Command!"),QMessageBox::Ok);
     }
     else
     {
-        QByteArray baCmd=ui->lineEdit_Cmd->text().toLatin1();   //获取指令
-
-        //指令拷贝进入char型数组
-        for(int i=0;i<=iCmdLeng;i++)
-        {
-            stringinput[i]=baCmd[i];
-            if(i==iCmdLeng)
-                stringinput[i]='\0';
-        }
-
-        //指令写入
-        status = viWrite (instr, (ViBuf)stringinput, (ViUInt32)strlen(stringinput), &writeCount);
-        if (status < VI_SUCCESS)
-        {
-            //写入失败处理
-            QMessageBox::information(this,tr("Information"),tr("Error writing to the device."),QMessageBox::Ok);
-        }
-
-        //读取数据
-        status = viRead (instr, buffer, 100, &retCount);
-        if (status < VI_SUCCESS)
-        {
-            //读取失败处理
-            QMessageBox::information(this,tr("Information"),tr("Error reading a response from the device."),QMessageBox::Ok);
-        }
-        else
-        {
-            QString strbuffer=(char*)buffer;
-
-            ui->textEdit_Receive->append(tr("Data Length: %1").arg(retCount));  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
-            ui->textEdit_Receive->append(tr("Data read: ")+strbuffer);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
-
-        }
-
-        viClose(instr);         //关闭同设备的连接
-        viClose(defaultRM);     //关闭与默认资源管理器的通话
+        Send_No_Get(ui->lineEdit_Cmd->text());
     }
-
 }
 
-double Widget::Get_Number(QString cmd)
+//发送指令且回读
+void Widget::on_bt_SendCMD_Get_clicked()
 {
-    double number = 0;
+    ui->textEdit_Receive->clear();  //清空文本框
 
-    status=viOpenDefaultRM (&defaultRM);    //返回与默认资源管理器的通话
-    if (status < VI_SUCCESS)
+    int iCmdLeng;
+
+    iCmdLeng=ui->lineEdit_Cmd->text().length();
+
+    if(iCmdLeng==0)
     {
-        //失败处理
-        QMessageBox::information(this,tr("Information"),tr("Could no open a session to the VISA Resource!"),QMessageBox::Ok);
-        return -1;
+        QMessageBox::warning(this,tr("Warning!"),tr("Please enter you Command!"),QMessageBox::Ok);
+        return;
     }
 
-    //获取设备名称
-    QByteArray ba=ui->comboBox->currentText().toLatin1();
-    ViRsrc DevName=ba.data();
+    QString receive = Send_And_Get(ui->lineEdit_Cmd->text());
 
-    //打开设备端口
-    status = viOpen (defaultRM, DevName, VI_NULL, VI_NULL, &instr);
-    if (status < VI_SUCCESS)
-    {
-        QMessageBox::information(this,tr("Information"),tr("Cannot open a session to the device."),QMessageBox::Ok);
-    }
-
-    /* 设置连接超时时间为5s    Set timeout value to 5000 milliseconds (5 seconds).*/
-    status = viSetAttribute (instr, VI_ATTR_TMO_VALUE, 5000);   //设置资源属性状态值
-
-    //定义指令
-    QByteArray baCmd = cmd.toLatin1();
-
-    int iCmdLeng = baCmd.length(); //获取指令长度
-
-    //指令拷贝进入char型数组
-    for(int i=0;i<=iCmdLeng;i++)
-    {
-        stringinput[i]=baCmd[i];
-        if(i==iCmdLeng)
-            stringinput[i]='\0';
-    }
-
-    //指令写入
-    status = viWrite (instr, (ViBuf)stringinput, (ViUInt32)strlen(stringinput), &writeCount);
-    if (status < VI_SUCCESS)
-    {
-        //写入失败处理
-        QMessageBox::information(this,tr("Information"),tr("Error writing to the device."),QMessageBox::Ok);
-    }
-
-    //读取数据
-    status = viRead (instr, buffer, 100, &retCount);
-    if (status < VI_SUCCESS)
-    {
-        //读取失败处理
-        QMessageBox::information(this,tr("Information"),tr("Error reading a response from the device."),QMessageBox::Ok);
-    }
-    else
-    {
-        QString strbuffer=(char*)buffer;
-        number = strbuffer.toDouble();
-
-    }
-
-    viClose(instr);         //关闭同设备的连接
-    viClose(defaultRM);     //关闭与默认资源管理器的通话
-
-    return number;
+    ui->textEdit_Receive->append(receive);  //清空文本框
 }
+
+//发送门限电压设置指令
+void Widget::on_Voltage_Set_clicked()
+{
+    double vol1 = ui->Voltage1->text().toDouble();
+    QString volinput1 = "INPut1:LEVel:ABSolute " + QString::number(vol1,10,2);
+    Send_No_Get(volinput1);
+
+    double vol2 = ui->Voltage2->text().toDouble();
+    QString volinput2 = "INPut2:LEVel:ABSolute " + QString::number(vol2,10,2);
+    Send_No_Get(volinput2);
+}
+
+
 
 void Widget::on_get_fre_clicked()
 {
@@ -304,6 +217,8 @@ void Widget::Timing()
     QString str = QString("time interval: %1").arg(time, 0,'r',12);
     ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
     str.clear();
+}
+
 
 //    //创建文件路径和文件
 //    QDir TEST;
@@ -338,7 +253,6 @@ void Widget::Timing()
 //    out<<"要写入内容"<<endl;
 //    out.flush();
 //    file.close();
-}
 
 /*
  *
@@ -384,6 +298,10 @@ void Widget::Timing()
 //       /* Close */
 //       viClose( pInstrHandle);
 //       viClose( rmSession);
+
+
+
+
 
 
 
