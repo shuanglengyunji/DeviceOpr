@@ -1,0 +1,13 @@
+
+INPut1:LEVel:MAXimum?
+INPut1:LEVel:MINimum?
+INPut1:LEVel:PTPeak?
+INPut2:LEVel:MAXimum?
+INPut2:LEVel:MINimum?
+INPut2:LEVel:PTPeak?
+CONFigure:SCALar:VOLTage:TINTerval (@1),(@2)
+INPut1:LEVel:ABSolute 2
+INPut2:LEVel:ABSolute 0.015
+INPut1:LEVel:ABSolute?
+INPut2:LEVel:ABSolute?
+READ?
