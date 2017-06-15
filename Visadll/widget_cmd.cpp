@@ -54,6 +54,21 @@ void Widget::on_Voltage_Set_clicked()
     ui->Timer_button->setEnabled(true);
     ui->set_timer->setEnabled(true);
     ui->label_timer->setEnabled(true);
+
+    //路径选择使能
+    ui->lineEdit_filepath->setEnabled(true);
+    ui->filepath->setEnabled(true);
+
+    //定时保持按钮使能
+    ui->checkBox_10000s->setEnabled(true);
+    ui->checkBox_1000s->setEnabled(true);
+    ui->checkBox_100s->setEnabled(true);
+    ui->checkBox_10s->setEnabled(true);
+    ui->checkBox_1s->setEnabled(true);
+
+    //测量计数器使能
+    ui->clear_counter->setEnabled(true);
+    ui->lineEdit_counter->setEnabled(true);
 }
 
 //进入时间间隔测量模式
@@ -69,6 +84,24 @@ void Widget::on_CMD_TINTerval_clicked()
 
     //停止定时测量
     Timer_Stop();
+
+    //路径选择失能
+    ui->lineEdit_filepath->setEnabled(false);
+    ui->filepath->setEnabled(false);
+
+    //定时保持按钮失能
+    ui->checkBox_10000s->setEnabled(false);
+    ui->checkBox_1000s->setEnabled(false);
+    ui->checkBox_100s->setEnabled(false);
+    ui->checkBox_10s->setEnabled(false);
+    ui->checkBox_1s->setEnabled(false);
+
+    //测量计数器失能
+    ui->clear_counter->setEnabled(false);
+    ui->lineEdit_counter->setEnabled(false);
+
+    //计数器清零
+    measure_counter = 0;
 
     QString cmd2 = "SYSTem:TIMeout 2";  //设置测量时间间隔为2s（由于信号1s才出现一次，再加上测量时间，1s的超时时间很容易导致超时）
     Send_No_Get(cmd2);

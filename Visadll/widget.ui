@@ -127,12 +127,28 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>230</y>
+     <y>330</y>
      <width>371</width>
-     <height>57</height>
+     <height>54</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="Layout_measure">
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="set_timer">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>1000</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_timer">
       <property name="enabled">
@@ -153,29 +169,33 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QPushButton" name="Time_Interval">
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_counter">
       <property name="enabled">
        <bool>false</bool>
       </property>
       <property name="text">
-       <string>单次测量</string>
+       <string>测量次数：</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="set_timer">
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="lineEdit_counter">
       <property name="enabled">
        <bool>false</bool>
       </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QPushButton" name="clear_counter">
+      <property name="enabled">
+       <bool>false</bool>
       </property>
       <property name="text">
-       <string>1000</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <string>清零计数器</string>
       </property>
      </widget>
     </item>
@@ -275,54 +295,72 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>330</y>
+     <y>280</y>
      <width>371</width>
-     <height>62</height>
+     <height>41</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QCheckBox" name="checkBox_1s">
-      <property name="text">
-       <string>数据（1s）</string>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="checkBox_1000s">
+      <property name="enabled">
+       <bool>false</bool>
       </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QCheckBox" name="checkBox_10000s">
       <property name="text">
-       <string>数据（10000s）</string>
+       <string>数据（1000s）</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
      <widget class="QCheckBox" name="checkBox_10s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>数据（10s）</string>
       </property>
      </widget>
     </item>
+    <item row="1" column="1">
+     <widget class="QCheckBox" name="checkBox_10000s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>数据（10000s）</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="2">
      <widget class="QCheckBox" name="checkBox_100s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>数据（100s）</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QCheckBox" name="checkBox_1000s">
+    <item row="0" column="0">
+     <widget class="QCheckBox" name="checkBox_1s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
-       <string>数据（1000s）</string>
+       <string>数据（1s）</string>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
   <widget class="QPushButton" name="filepath">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>310</x>
-     <y>300</y>
+     <y>250</y>
      <width>71</width>
      <height>23</height>
     </rect>
@@ -332,39 +370,32 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_filepath">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>300</y>
+     <y>250</y>
      <width>291</width>
      <height>20</height>
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="clear_counter">
+  <widget class="QPushButton" name="Time_Interval">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>410</y>
-     <width>81</width>
+     <x>10</x>
+     <y>220</y>
+     <width>371</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>清零计数器</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit_counter">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>410</y>
-     <width>111</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
+    <string>单次测量</string>
    </property>
   </widget>
  </widget>
