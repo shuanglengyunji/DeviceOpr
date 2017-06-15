@@ -46,60 +46,100 @@ void Widget::on_Voltage_Set_clicked()
     QString volinput2 = "INPut2:LEVel:ABSolute " + QString::number(vol2,10,2);
     Send_No_Get(volinput2);
     volinput2.clear();
+
+    //单次测量按钮使能
+    ui->Time_Interval->setEnabled(true);
+
+    //定时测量使能
+    ui->Timer_button->setEnabled(true);
+    ui->set_timer->setEnabled(true);
+    ui->label_timer->setEnabled(true);
 }
 
-//进入时间间隔测量模式按钮
+//进入时间间隔测量模式
 void Widget::on_CMD_TINTerval_clicked()
 {
+    //单次测量按钮失能
+    ui->Time_Interval->setEnabled(false);
+
+    //定时测量失能
+    ui->Timer_button->setEnabled(false);
+    ui->set_timer->setEnabled(false);
+    ui->label_timer->setEnabled(false);
+
+    //停止定时测量
+    Timer_Stop();
+
+    QString cmd2 = "SYSTem:TIMeout 2";  //设置测量时间间隔为2s（由于信号1s才出现一次，再加上测量时间，1s的超时时间很容易导致超时）
+    Send_No_Get(cmd2);
+    cmd2.clear();
+
     QString cmd = "CONFigure:SCALar:VOLTage:TINTerval (@1),(@2)";
     Send_No_Get(cmd);
     cmd.clear();
+
+    //使能电压门限，失能时间间隔测量
+
+    //电压门限设置窗口使能
+    ui->Voltage1->setEnabled(true);
+    ui->Voltage2->setEnabled(true);
+    ui->Voltage_Set->setEnabled(true);
+    ui->label_Gate1->setEnabled(true);
+    ui->label_Gate2->setEnabled(true);
 }
 
-//单次测量按钮
+//单次测量
 void Widget::on_Time_Interval_clicked()
 {
     ui->Time_Interval->setEnabled(false);
 
     double time = Get_Number("READ?");
-    QString str = QString("time interval: %1").arg(time, 0,'r',12);
+    QString str = QString("time interval: %1").arg(time, 0,'r',16); //最大能够达到16位精度（返回数据的精度是16位）
     ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
     str.clear();
 
     ui->Time_Interval->setEnabled(true);
 }
 
-//定时控制按钮
-void Widget::on_Timer_button_clicked()
+//定时测量
+void Widget::Timing1()
 {
-    static int flag = 0;    //0:没开始   1：开始
+    double time = Get_Number("READ?");
 
-    if(flag == 0)
+    if(time>0.001 && time<1)    //只接受1ms~1s之间的值
     {
-        int timer = ui->set_timer->text().toInt();
-        testTimer.start(timer); //1s
-        flag = 1;
-        ui->Timer_button->setText("停止定时测量");
+        QString str = QString("time interval: %1").arg(time, 0,'r',16); //最大能够达到16位精度（返回数据的精度是16位）
+        ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
 
-        //定时器槽函数连接
-        connect(&testTimer,SIGNAL(timeout()), this, SLOT(Timing()));
+        if(state_1s)
+        {
+            Record_Data1(time);
+        }
+
+        if(state_10s)
+        {
+            Record_Data10(time);
+        }
+
+        if(state_100s)
+        {
+            Record_Data100(time);
+        }
+
+        if(state_1000s)
+        {
+            Record_Data1000(time);
+        }
+
+        if(state_10000s)
+        {
+            Record_Data10000(time);
+        }
     }
     else
     {
-        testTimer.stop();
-        flag = 0;
-        ui->Timer_button->setText("开始定时测量");
-
-        //定时器槽函数连接
-        disconnect(&testTimer,SIGNAL(timeout()), this, SLOT(Timing()));
+        ui->textEdit_Receive->append("测量错误！");  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
     }
 }
 
-//定时器函数
-void Widget::Timing()
-{
-    double time = Get_Number("READ?");
-    QString str = QString("time interval: %1").arg(time, 0,'r',12);
-    ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
-    str.clear();
-}
+

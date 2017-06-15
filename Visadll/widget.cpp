@@ -1,6 +1,6 @@
 #include "widget.h"
 #include "ui_widget.h"
-
+#include <QDateTime>
 
 
 Widget::Widget(QWidget *parent) :
@@ -8,6 +8,17 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+
+    state_1s = false;
+    state_10s = false;
+    state_100s = false;
+    state_1000s = false;
+    state_10000s = false;
+
+    QString file_full = QCoreApplication::applicationFilePath();    //获取路径信息
+    QFileInfo fi = QFileInfo(file_full);                            //建立文件信息对象
+    file_path = fi.absolutePath();                                  //提取路径信息
+    ui->lineEdit_filepath->setText(file_path);
 }
 
 Widget::~Widget()
@@ -102,16 +113,13 @@ void Widget::on_bt_Search_clicked()
 
     if(ui->comboBox->count()>0)
     {
+        //手动发送指令部分使能
         ui->bt_SendCMD->setEnabled(true);
         ui->bt_SendCMD_Get->setEnabled(true);
         ui->lineEdit_Cmd->setEnabled(true);
-        ui->Voltage1->setEnabled(true);
-        ui->Voltage2->setEnabled(true);
-        ui->Voltage_Set->setEnabled(true);
+
+        //进入时间间隔测量模式按钮使能
         ui->CMD_TINTerval->setEnabled(true);
-        ui->Time_Interval->setEnabled(true);
-        ui->Timer_button->setEnabled(true);
-        ui->set_timer->setEnabled(true);
     }
 
 }
@@ -204,4 +212,5 @@ void Widget::on_textEdit_Receive_textChanged()
 //       /* Close */
 //       viClose( pInstrHandle);
 //       viClose( rmSession);
+
 

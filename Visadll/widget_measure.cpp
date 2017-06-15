@@ -6,7 +6,7 @@ QString Widget::Send_And_Get(QString cmd)
 {
     QString returndata = "ERROR";
 
-    status=viOpenDefaultRM (&defaultRM);    //返回与默认资源管理器的通话
+    status = viOpenDefaultRM (&defaultRM);    //返回与默认资源管理器的通话
     if (status < VI_SUCCESS)
     {
         //失败处理

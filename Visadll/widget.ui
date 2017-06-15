@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>时间间隔测量辅助程序</string>
+   <string>时间秒信号测量辅助程序</string>
   </property>
   <widget class="QPushButton" name="bt_Search">
    <property name="geometry">
@@ -45,7 +45,7 @@
      <x>730</x>
      <y>60</y>
      <width>391</width>
-     <height>311</height>
+     <height>381</height>
     </rect>
    </property>
   </widget>
@@ -87,43 +87,11 @@
      <x>390</x>
      <y>20</y>
      <width>321</width>
-     <height>351</height>
+     <height>421</height>
     </rect>
    </property>
    <property name="readOnly">
     <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="Time_Interval">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>260</y>
-     <width>351</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>单次时间间隔测量</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="Timer_button">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>350</y>
-     <width>351</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>开始定时测量</string>
    </property>
   </widget>
   <widget class="QPushButton" name="bt_SendCMD">
@@ -142,74 +110,6 @@
     <string>Send_No_Get</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="Voltage1">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>180</y>
-     <width>171</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="Voltage2">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>180</y>
-     <width>171</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="Voltage_Set">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>210</y>
-     <width>351</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>设置门限电压（V）</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_Gate1">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>160</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CH1门限电压</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_Gate1_2">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>160</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CH2门限电压</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_CMD">
    <property name="geometry">
     <rect>
@@ -223,15 +123,73 @@
     <string>测试指令输入</string>
    </property>
   </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>230</y>
+     <width>371</width>
+     <height>57</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="Layout_measure">
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_timer">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>测量时间间隔（ms）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QPushButton" name="Timer_button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>定时测量</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QPushButton" name="Time_Interval">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>单次测量</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="set_timer">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>1000</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QPushButton" name="CMD_TINTerval">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>120</y>
-     <width>351</width>
+     <x>10</x>
+     <y>110</y>
+     <width>369</width>
      <height>23</height>
     </rect>
    </property>
@@ -239,39 +197,148 @@
     <string>进入时间间隔测模式</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="set_timer">
+  <widget class="QLabel" name="label_Gate1">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>320</y>
-     <width>351</width>
+     <x>10</x>
+     <y>140</y>
+     <width>101</width>
      <height>20</height>
     </rect>
    </property>
-   <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
-   </property>
    <property name="text">
-    <string>1000</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    <string>CH1门限电压（V）</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_timer">
+  <widget class="QLabel" name="label_Gate2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>300</y>
-     <width>111</width>
-     <height>16</height>
+     <x>200</x>
+     <y>140</y>
+     <width>101</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>测量时间间隔（ms）</string>
+    <string>CH2门限电压（V）</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Voltage1">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>160</y>
+     <width>181</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Voltage2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>160</y>
+     <width>181</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Voltage_Set">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>190</y>
+     <width>371</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>设置门限电压</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>360</y>
+     <width>371</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QCheckBox" name="checkBox_1s">
+      <property name="text">
+       <string>数据记录（1s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QCheckBox" name="checkBox_10000s">
+      <property name="text">
+       <string>数据记录（10000s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QCheckBox" name="checkBox_10s">
+      <property name="text">
+       <string>数据记录（10s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QCheckBox" name="checkBox_100s">
+      <property name="text">
+       <string>数据记录（100s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="checkBox_1000s">
+      <property name="text">
+       <string>数据记录（1000s）</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="filepath">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>300</y>
+     <width>71</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>选择路径</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_filepath">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>300</y>
+     <width>291</width>
+     <height>20</height>
+    </rect>
    </property>
   </widget>
  </widget>
