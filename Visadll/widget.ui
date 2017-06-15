@@ -275,7 +275,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>360</y>
+     <y>330</y>
      <width>371</width>
      <height>62</height>
     </rect>
@@ -284,35 +284,35 @@
     <item row="0" column="0">
      <widget class="QCheckBox" name="checkBox_1s">
       <property name="text">
-       <string>数据记录（1s）</string>
+       <string>数据（1s）</string>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
      <widget class="QCheckBox" name="checkBox_10000s">
       <property name="text">
-       <string>数据记录（10000s）</string>
+       <string>数据（10000s）</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
      <widget class="QCheckBox" name="checkBox_10s">
       <property name="text">
-       <string>数据记录（10s）</string>
+       <string>数据（10s）</string>
       </property>
      </widget>
     </item>
     <item row="0" column="2">
      <widget class="QCheckBox" name="checkBox_100s">
       <property name="text">
-       <string>数据记录（100s）</string>
+       <string>数据（100s）</string>
       </property>
      </widget>
     </item>
     <item row="1" column="0">
      <widget class="QCheckBox" name="checkBox_1000s">
       <property name="text">
-       <string>数据记录（1000s）</string>
+       <string>数据（1000s）</string>
       </property>
      </widget>
     </item>
@@ -339,6 +339,32 @@
      <width>291</width>
      <height>20</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="clear_counter">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>410</y>
+     <width>81</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>清零计数器</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_counter">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>410</y>
+     <width>111</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

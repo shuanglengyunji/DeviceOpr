@@ -79,6 +79,8 @@ private slots:
 
     void on_filepath_clicked();
 
+    void on_clear_counter_clicked();
+
 private:
     Ui::Widget *ui;
 
@@ -103,6 +105,8 @@ private:
     bool state_10000s;
 
     QString file_path;
+
+    qulonglong measure_counter;
 };
 
 #endif // WIDGET_H

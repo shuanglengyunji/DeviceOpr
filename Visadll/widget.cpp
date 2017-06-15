@@ -19,6 +19,12 @@ Widget::Widget(QWidget *parent) :
     QFileInfo fi = QFileInfo(file_full);                            //建立文件信息对象
     file_path = fi.absolutePath();                                  //提取路径信息
     ui->lineEdit_filepath->setText(file_path);
+
+    measure_counter = 0;    //测量次数记录
+
+    QString str;
+    str.setNum(measure_counter);
+    ui->lineEdit_counter->setText(str);
 }
 
 Widget::~Widget()
@@ -212,5 +218,4 @@ void Widget::on_textEdit_Receive_textChanged()
 //       /* Close */
 //       viClose( pInstrHandle);
 //       viClose( rmSession);
-
 
