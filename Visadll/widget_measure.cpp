@@ -180,6 +180,12 @@ double Widget::Get_Number(QString cmd)
     }
 
     //读取数据
+    //buffer清零
+//    for(int i=0;i<100;i++)
+//    {
+//        buffer[i]=0;
+//    }
+
     status = viRead (instr, buffer, 100, &retCount);
     if (status < VI_SUCCESS)
     {
@@ -188,20 +194,20 @@ double Widget::Get_Number(QString cmd)
     }
     else
     {
-        QString strbuffer;
-        strbuffer = (char*)buffer;
+        QString strbuffer = (char*)buffer;
+        number = strbuffer.toDouble();
 
-        int width = strbuffer.indexOf('\n');    //提取有效字符串长度
+//        int width = strbuffer.indexOf('\n');    //提取有效字符串长度
 
-        QByteArray numbertmp(width,0);  //构建QByteArray数组
+//        QByteArray numbertmp(width,0);  //构建QByteArray数组
 
-        //将数据拷贝进QByteArray数组
-        for(int i=0;i<width;i++)
-        {
-            numbertmp[i] = buffer[i];
-        }
+//        //将数据拷贝进QByteArray数组
+//        for(int i=0;i<width;i++)
+//        {
+//            numbertmp[i] = buffer[i];
+//        }
 
-        number = numbertmp.toDouble();
+//        number = numbertmp.toDouble();  //转换为double型变量
     }
 
     viClose(instr);         //关闭同设备的连接
