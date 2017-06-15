@@ -188,9 +188,20 @@ double Widget::Get_Number(QString cmd)
     }
     else
     {
-        QString strbuffer=(char*)buffer;
-        number = strbuffer.toDouble();
+        QString strbuffer;
+        strbuffer = (char*)buffer;
 
+        int width = strbuffer.indexOf('\n');    //提取有效字符串长度
+
+        QByteArray numbertmp(width,0);  //构建QByteArray数组
+
+        //将数据拷贝进QByteArray数组
+        for(int i=0;i<width;i++)
+        {
+            numbertmp[i] = buffer[i];
+        }
+
+        number = numbertmp.toDouble();
     }
 
     viClose(instr);         //关闭同设备的连接
