@@ -52,8 +52,13 @@ void Widget::on_filepath_clicked()
 
 void Widget::Record_Data1(double s)
 {
+    //获取当前时间
+    QDateTime da_time;
+    QString time_str = da_time.currentDateTime().toString("yyyy-MM-dd HH-mm-ss");
+    QString tmp = time_str.left(10);
+
     //建立、打开文件
-    QString fileName = file_path + "/1_1.txt";
+    QString fileName = file_path + "/" + tmp + "-1.txt";
     QFile file(fileName);
     if(!file.open(QIODevice::WriteOnly  | QIODevice::Text|QIODevice::Append))   //打开文件
     {
@@ -69,8 +74,13 @@ void Widget::Record_Data1(double s)
 
 void Widget::Record_Data10(double s)
 {
+    //获取当前时间
+    QDateTime da_time;
+    QString time_str = da_time.currentDateTime().toString("yyyy-MM-dd HH-mm-ss");
+    QString tmp = time_str.left(10);
+
     //建立、打开文件
-    QString fileName = file_path + "/10_1.txt";
+    QString fileName = file_path + "/" + tmp + "-10.txt";
     QFile file(fileName);
     if(!file.open(QIODevice::WriteOnly  | QIODevice::Text|QIODevice::Append))   //打开文件
     {
@@ -86,8 +96,13 @@ void Widget::Record_Data10(double s)
 
 void Widget::Record_Data100(double s)
 {
+    //获取当前时间
+    QDateTime da_time;
+    QString time_str = da_time.currentDateTime().toString("yyyy-MM-dd HH-mm-ss");
+    QString tmp = time_str.left(10);
+
     //建立、打开文件
-    QString fileName = file_path + "/100_1.txt";
+    QString fileName = file_path + "/" + tmp + "-100.txt";
     QFile file(fileName);
     if(!file.open(QIODevice::WriteOnly  | QIODevice::Text|QIODevice::Append))   //打开文件
     {
@@ -103,8 +118,13 @@ void Widget::Record_Data100(double s)
 
 void Widget::Record_Data1000(double s)
 {
+    //获取当前时间
+    QDateTime da_time;
+    QString time_str = da_time.currentDateTime().toString("yyyy-MM-dd HH-mm-ss");
+    QString tmp = time_str.left(10);
+
     //建立、打开文件
-    QString fileName = file_path + "/1000_1.txt";
+    QString fileName = file_path + "/" + tmp + "-1000.txt";
     QFile file(fileName);
     if(!file.open(QIODevice::WriteOnly  | QIODevice::Text|QIODevice::Append))   //打开文件
     {
@@ -120,8 +140,13 @@ void Widget::Record_Data1000(double s)
 
 void Widget::Record_Data10000(double s)
 {
+    //获取当前时间
+    QDateTime da_time;
+    QString time_str = da_time.currentDateTime().toString("yyyy-MM-dd HH-mm-ss");
+    QString tmp = time_str.left(10);
+
     //建立、打开文件
-    QString fileName = file_path + "/10000_1.txt";
+    QString fileName = file_path + "/" + tmp + "-10000.txt";
     QFile file(fileName);
     if(!file.open(QIODevice::WriteOnly  | QIODevice::Text|QIODevice::Append))   //打开文件
     {

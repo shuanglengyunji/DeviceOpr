@@ -1,6 +1,5 @@
 #include "widget.h"
 #include "ui_widget.h"
-#include <QDateTime>
 
 
 Widget::Widget(QWidget *parent) :
@@ -218,4 +217,3 @@ void Widget::on_textEdit_Receive_textChanged()
 //       /* Close */
 //       viClose( pInstrHandle);
 //       viClose( rmSession);
-

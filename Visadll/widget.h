@@ -7,6 +7,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QDateTime>
 
 #include "../Ni/include/visa.h"
 
