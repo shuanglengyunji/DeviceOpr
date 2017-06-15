@@ -9,54 +9,33 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1141</width>
-    <height>460</height>
+    <width>833</width>
+    <height>432</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>时间秒信号测量辅助程序</string>
+  <property name="minimumSize">
+   <size>
+    <width>833</width>
+    <height>432</height>
+   </size>
   </property>
-  <widget class="QPushButton" name="bt_Search">
-   <property name="geometry">
-    <rect>
-     <x>1030</x>
-     <y>20</y>
-     <width>91</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Search Device</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="comboBox">
-   <property name="geometry">
-    <rect>
-     <x>730</x>
-     <y>20</y>
-     <width>291</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QListWidget" name="listWidget">
-   <property name="geometry">
-    <rect>
-     <x>730</x>
-     <y>60</y>
-     <width>391</width>
-     <height>381</height>
-    </rect>
-   </property>
-  </widget>
+  <property name="maximumSize">
+   <size>
+    <width>833</width>
+    <height>432</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>秒信号测量辅助程序</string>
+  </property>
   <widget class="QPushButton" name="bt_SendCMD_Get">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>70</y>
+     <x>730</x>
+     <y>110</y>
      <width>91</width>
      <height>23</height>
     </rect>
@@ -71,27 +50,11 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>40</y>
-     <width>351</width>
+     <x>450</x>
+     <y>80</y>
+     <width>371</width>
      <height>21</height>
     </rect>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="textEdit_Receive">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>20</y>
-     <width>321</width>
-     <height>421</height>
-    </rect>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="bt_SendCMD">
@@ -100,8 +63,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>70</y>
+     <x>630</x>
+     <y>110</y>
      <width>91</width>
      <height>23</height>
     </rect>
@@ -113,8 +76,8 @@
   <widget class="QLabel" name="label_CMD">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
+     <x>450</x>
+     <y>60</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -126,8 +89,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>330</y>
+     <x>450</x>
+     <y>360</y>
      <width>371</width>
      <height>54</height>
     </rect>
@@ -184,6 +147,9 @@
       <property name="enabled">
        <bool>false</bool>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
       <property name="readOnly">
        <bool>true</bool>
       </property>
@@ -207,8 +173,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>110</y>
+     <x>450</x>
+     <y>140</y>
      <width>369</width>
      <height>23</height>
     </rect>
@@ -223,8 +189,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>140</y>
+     <x>450</x>
+     <y>170</y>
      <width>101</width>
      <height>20</height>
     </rect>
@@ -239,8 +205,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>140</y>
+     <x>640</x>
+     <y>170</y>
      <width>101</width>
      <height>20</height>
     </rect>
@@ -255,11 +221,14 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>160</y>
+     <x>450</x>
+     <y>190</y>
      <width>181</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="Voltage2">
@@ -268,11 +237,14 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>160</y>
+     <x>640</x>
+     <y>190</y>
      <width>181</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
    </property>
   </widget>
   <widget class="QPushButton" name="Voltage_Set">
@@ -281,8 +253,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>190</y>
+     <x>450</x>
+     <y>220</y>
      <width>371</width>
      <height>23</height>
     </rect>
@@ -294,8 +266,8 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>280</y>
+     <x>450</x>
+     <y>310</y>
      <width>371</width>
      <height>41</height>
     </rect>
@@ -359,8 +331,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>250</y>
+     <x>750</x>
+     <y>280</y>
      <width>71</width>
      <height>23</height>
     </rect>
@@ -375,8 +347,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>250</y>
+     <x>450</x>
+     <y>280</y>
      <width>291</width>
      <height>20</height>
     </rect>
@@ -388,14 +360,86 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>220</y>
+     <x>450</x>
+     <y>250</y>
      <width>371</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
     <string>单次测量</string>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>421</width>
+     <height>411</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>设备列表</string>
+    </attribute>
+    <widget class="QListWidget" name="listWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>391</width>
+       <height>371</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>数据监控</string>
+    </attribute>
+    <widget class="QTextEdit" name="textEdit_Receive">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>391</width>
+       <height>371</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>30</y>
+     <width>271</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bt_Search">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>30</y>
+     <width>91</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Search Device</string>
    </property>
   </widget>
  </widget>

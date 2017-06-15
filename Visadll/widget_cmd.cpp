@@ -69,6 +69,7 @@ void Widget::on_Voltage_Set_clicked()
     //测量计数器使能
     ui->clear_counter->setEnabled(true);
     ui->lineEdit_counter->setEnabled(true);
+    ui->label_counter->setEnabled(true);
 }
 
 //进入时间间隔测量模式
@@ -99,6 +100,7 @@ void Widget::on_CMD_TINTerval_clicked()
     //测量计数器失能
     ui->clear_counter->setEnabled(false);
     ui->lineEdit_counter->setEnabled(false);
+    ui->label_counter->setEnabled(false);
 
     //计数器清零
     measure_counter = 0;
