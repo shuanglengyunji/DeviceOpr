@@ -207,3 +207,90 @@ double Widget::Get_Number(QString cmd)
 
 
 
+void Widget::Continue_Start()
+{
+    status=viOpenDefaultRM (&defaultRM);    //返回与默认资源管理器的通话
+    if (status < VI_SUCCESS)
+    {
+        //失败处理
+        QMessageBox::information(this,tr("Information"),tr("Could no open a session to the VISA Resource!"),QMessageBox::Ok);
+        return;
+    }
+
+    //获取设备名称
+    QByteArray ba=ui->comboBox->currentText().toLatin1();
+    ViRsrc DevName=ba.data();
+
+    //打开设备端口
+    status = viOpen (defaultRM, DevName, VI_NULL, VI_NULL, &instr);
+    if (status < VI_SUCCESS)
+    {
+        QMessageBox::information(this,tr("Information"),tr("Cannot open a session to the device."),QMessageBox::Ok);
+    }
+
+    /* 设置连接超时时间为5s    Set timeout value to 5000 milliseconds (5 seconds).*/
+    status = viSetAttribute (instr, VI_ATTR_TMO_VALUE, 5000);   //设置资源属性状态值
+}
+
+void Widget::Continue_Stop()
+{
+    viClose(instr);         //关闭同设备的连接
+    viClose(defaultRM);     //关闭与默认资源管理器的通话
+}
+
+
+//连续获取数据
+double Widget::Continue_Get_Number(QString cmd)
+{
+    double number = 0;
+
+    //定义指令
+    QByteArray baCmd = cmd.toLatin1();
+
+    int iCmdLeng = baCmd.length(); //获取指令长度
+
+    //指令拷贝进入char型数组
+    for(int i=0;i<=iCmdLeng;i++)
+    {
+        stringinput[i]=baCmd[i];
+        if(i==iCmdLeng)
+            stringinput[i]='\0';
+    }
+
+    //指令写入
+    status = viWrite (instr, (ViBuf)stringinput, (ViUInt32)strlen(stringinput), &writeCount);
+    if (status < VI_SUCCESS)
+    {
+        //写入失败处理
+        QMessageBox::information(this,tr("Information"),tr("Error writing to the device."),QMessageBox::Ok);
+    }
+
+    //读取数据
+
+    //buffer清零
+    for(int i=0;i<100;i++)
+    {
+        buffer[i]=0;
+    }
+
+    status = viRead (instr, buffer, 100, &retCount);
+    if (status < VI_SUCCESS)
+    {
+        //读取失败处理
+        QMessageBox::information(this,tr("Information"),tr("Error reading a response from the device."),QMessageBox::Ok);
+    }
+    else
+    {
+        QString strbuffer = (char*)buffer;
+        number = strbuffer.toDouble();
+    }
+
+
+
+    return number;
+}
+
+
+
+
+

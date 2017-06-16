@@ -41,10 +41,12 @@ public:
 
     void Timer_Stop();
 
-//public slots:
     //单独的采样函数
     void Timing1();  //定时器服务函数
 
+    void Continue_Start();
+    void Continue_Stop();
+    double Continue_Get_Number(QString cmd);
 
 private slots:
     void on_bt_Search_clicked();

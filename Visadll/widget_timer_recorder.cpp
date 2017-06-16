@@ -24,9 +24,7 @@ void Widget::on_Timer_button_clicked()
 {
     if(ui->Timer_button->text() == "定时测量")
     {
-//        int ms = ui->set_timer->text().toInt();
-//        Timer_Start(ms);
-
+        Continue_Start();
         Mythread.start();
 
         ui->Timer_button->setText("停止");
@@ -34,7 +32,7 @@ void Widget::on_Timer_button_clicked()
     else
     {
         Mythread.mystop();
-
+        Continue_Stop();
         ui->Timer_button->setText("定时测量");
     }
 }

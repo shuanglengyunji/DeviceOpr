@@ -139,7 +139,7 @@ void Widget::on_Time_Interval_clicked()
 //定时测量
 void Widget::Timing1()
 {
-    double time = Get_Number("READ?");
+    double time = Continue_Get_Number("READ?");
 
     if(time>0.001 && time<1)    //只接受1ms~1s之间的值
     {
