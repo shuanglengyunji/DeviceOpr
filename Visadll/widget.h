@@ -9,6 +9,8 @@
 #include <QFileDialog>
 #include <QDateTime>
 
+#include "measurethread.h"
+
 #include "../Ni/include/visa.h"
 
 
@@ -39,6 +41,11 @@ public:
 
     void Timer_Stop();
 
+//public slots:
+    //单独的采样函数
+    void Timing1();  //定时器服务函数
+
+
 private slots:
     void on_bt_Search_clicked();
 
@@ -47,8 +54,6 @@ private slots:
     void on_Time_Interval_clicked();
 
     void on_Timer_button_clicked();
-
-    void Timing1();  //定时器服务函数
 
     void on_bt_SendCMD_Get_clicked();
 

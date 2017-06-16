@@ -16,10 +16,12 @@ SOURCES += main.cpp\
         widget.cpp \
     widget_measure.cpp \
     widget_cmd.cpp \
-    widget_timer_recorder.cpp
+    widget_timer_recorder.cpp \
+    measurethread.cpp
 
 HEADERS  += widget.h\
-          ../Ni/include/visa.h
+          ../Ni/include/visa.h \
+    measurethread.h
 
 FORMS    += widget.ui
 

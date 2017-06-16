@@ -19,18 +19,21 @@ void Widget::Timer_Stop()
 }
 
 //开始定时测量按钮
+MeasureThread Mythread;
 void Widget::on_Timer_button_clicked()
 {
     if(ui->Timer_button->text() == "定时测量")
     {
-        int ms = ui->set_timer->text().toInt();
-        Timer_Start(ms);
+//        int ms = ui->set_timer->text().toInt();
+//        Timer_Start(ms);
+
+        Mythread.start();
 
         ui->Timer_button->setText("停止");
     }
     else
     {
-        Timer_Stop();
+        Mythread.mystop();
 
         ui->Timer_button->setText("定时测量");
     }

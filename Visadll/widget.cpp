@@ -1,6 +1,7 @@
 #include "widget.h"
 #include "ui_widget.h"
 
+extern Widget * m_pwidget;
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -19,11 +20,16 @@ Widget::Widget(QWidget *parent) :
     file_path = fi.absolutePath();                                  //提取路径信息
     ui->lineEdit_filepath->setText(file_path);
 
-    measure_counter = 0;    //测量次数记录
+    //测量次数初始化
+    measure_counter = 0;
 
+    //显示计数数值
     QString str;
     str.setNum(measure_counter);
     ui->lineEdit_counter->setText(str);
+
+    m_pwidget = this;
+
 }
 
 Widget::~Widget()
