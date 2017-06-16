@@ -18,7 +18,7 @@ void Widget::Timer_Stop()
     }
 }
 
-//定时控制按钮
+//开始定时测量按钮
 void Widget::on_Timer_button_clicked()
 {
     if(ui->Timer_button->text() == "定时测量")

@@ -145,45 +145,49 @@ void Widget::Timing1()
     {
         QString str = QString("time interval: %1").arg(time, 0,'r',16); //最大能够达到16位精度（返回数据的精度是16位）
         ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
-
-        measure_counter++;
-
-        QString str1;
-        str1.setNum(measure_counter);
-        ui->lineEdit_counter->setText(str1);
-
-        if(state_1s)
-        {
-            Record_Data1(time);
-        }
-
-        if(state_10s)
-        {
-            if(measure_counter % 10 == 0)
-                Record_Data10(time);
-        }
-
-        if(state_100s)
-        {
-            if(measure_counter % 100 == 0)
-                Record_Data100(time);
-        }
-
-        if(state_1000s)
-        {
-            if(measure_counter % 1000 == 0)
-                Record_Data1000(time);
-        }
-
-        if(state_10000s)
-        {
-            if(measure_counter % 10000 == 0)
-                Record_Data10000(time);
-        }
     }
     else
     {
         ui->textEdit_Receive->append("测量错误！");  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
+        time = -1;
+    }
+
+    //测量计数器累加
+    measure_counter++;
+
+    //显示measure_counter变量值
+    QString str1;
+    str1.setNum(measure_counter);
+    ui->lineEdit_counter->setText(str1);
+
+    //存储数据
+    if(state_1s)
+    {
+        Record_Data1(time);
+    }
+
+    if(state_10s)
+    {
+        if(measure_counter % 10 == 0)
+            Record_Data10(time);
+    }
+
+    if(state_100s)
+    {
+        if(measure_counter % 100 == 0)
+            Record_Data100(time);
+    }
+
+    if(state_1000s)
+    {
+        if(measure_counter % 1000 == 0)
+            Record_Data1000(time);
+    }
+
+    if(state_10000s)
+    {
+        if(measure_counter % 10000 == 0)
+            Record_Data10000(time);
     }
 }
 
