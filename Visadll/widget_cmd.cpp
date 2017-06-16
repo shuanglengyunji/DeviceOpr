@@ -191,4 +191,8 @@ void Widget::Timing1()
 void Widget::on_clear_counter_clicked()
 {
     measure_counter = 0;
+
+    QString str1;
+    str1.setNum(measure_counter);
+    ui->lineEdit_counter->setText(str1);
 }
