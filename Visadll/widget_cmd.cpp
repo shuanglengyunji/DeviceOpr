@@ -212,8 +212,10 @@ void Widget::on_clear_counter_clicked()
 //剔除错误数据
 void Widget::on_tichu_button_clicked()
 {
-    double initalData[100];
-    qint8 index_initialData = 0;
+
+    double initailData[100]; /*存储最初的数据*/
+    qint8 index_initialData = 0; /*最初数据存储数组的索引*/
+//    打开目标文件并转化成数字之后的格式
     QFile file(file_path+"/2017-06-19-1.txt");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug()<<"Can't open the file!"<<endl;
@@ -221,11 +223,27 @@ void Widget::on_tichu_button_clicked()
     QTextStream in(&file);
     while( !in.atEnd()){
         QString line = in.readLine();
-        initalData[index_initialData] = line.toDouble();
-//        qDebug() << line;
-        ui->tichu_text1->append(line);
-        ui->tichu_text2->append(QString::number(initalData[index_initialData],'g',16));
+        initailData[index_initialData] = line.toDouble(); /*读入字符转转换成double型数值*/
+        ui->tichu_text2->append(QString::number(initailData[index_initialData],'g',16));
         index_initialData+= 1;
 
+
     }
+
+    tichu(initailData,index_initialData);
+
+
+
+
+}
+
+void Widget::tichu(double *initial, qint8 index_initial)
+{
+
+    qint8 i;
+    double sum;
+    for(i=0;i<index_initial;i++){
+    sum += initial[i];
+    }
+    ui->tichu_text3->append(QString::number(sum,'g',16));
 }
