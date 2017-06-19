@@ -214,93 +214,164 @@ void Widget::on_clear_counter_clicked()
 void Widget::on_tichu_button_clicked()
 {
 
-    double initailData[100]; /*存储最初的数据*/
-    qint8 index_initialData = 0; /*最初数据存储数组的索引*/
-    qint8 &index=index_initialData;
-    qint8 i;//索引
-//    打开目标文件并转化成数字之后的格式
+
+
+
+    double  initialData=0;
+    qint8 dataNumber=0;//数据总数
+    double standardError=0;//标准偏差
+    double average=0;//平均
+
     QFile file(file_path+"/2017-06-19-1.txt");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug()<<"Can't open the file!"<<endl;
     }
+    QFile file_1(file_path+"/test.txt");
+    if(!file_1.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qDebug()<<"Can't open the file!"<<endl;
+    }
+
     QTextStream in(&file);
-    while( index_initialData!=100){
+    QTextStream in_1(&file_1);
+
+    while(!in.atEnd()){
+        QString line;
+        line = in.readLine();
+        dataNumber += 1;
+
+    }
+    ui->tichu_text2->append("数据总数:"+QString::number(dataNumber,'g',16));
+
+    //求平均值
+    in.seek(0);
+    while(!in.atEnd()){
         QString line = in.readLine();
-        initailData[index_initialData] = line.toDouble(); /*读入字符转转换成double型数值*/
-        ui->tichu_text2->append(QString::number(initailData[index_initialData],'g',16));
-        index_initialData+= 1;
+        double x;
+        initialData = line.toDouble(); /*读入字符转转换成double型数值*/
+//        in_1<<line<<"\n";
+        ui->tichu_text2->append(QString::number(initialData,'g',16));
 
-
+        //求平均值
+        x = initialData/dataNumber;
+        average +=x;
     }
-
-    tichu(initailData,index);
-    tichu(initailData,index);
-    tichu(initailData,index);
-    ui->tichu_text3->append("剔除后:\n");
-    for(i=0;i<index;i++)
-    {
-        ui->tichu_text3->append(QString::number(initailData[i],'g',16));
-    }
-
-
-
-}
-
-void Widget::tichu(double *initial, qint8 &index_initial)
-{
-
-    qint8 i,j;//循环索引
-    double Sum=0;//和
-    double Sum_1=0;//之后算法的中间变量
-    double standardError=0;//标准误差
-    double Average=0;  /*平均*/
-    double d_x=0;//变化量
-    //求平均值，把和,平均值输出,index_initial = 100
-    for(i=0;i<index_initial;i++){
-        Sum += initial[i];
-    }
-    Average = Sum/(index_initial);
-    ui->tichu_text3->append("SUM:\n"+QString::number(Sum,'g',16));
-    ui->tichu_text3->append("AVERAGE:\n"+QString::number(Average,'g',16));
-
+    ui->tichu_text3->append("平均:\n"+QString::number(average,'g',16));
 
     //求实验标准偏差
-    Sum_1 = 0; //初始化Sum
-    for(i=0;i<index_initial;i++){
-        d_x = pow((initial[i] - Average),2);
-        Sum_1 += d_x;
+    in.seek(0);//将当前读取文件指针移动到文件开始
+    while(!in.atEnd()){
+        QString line = in.readLine();
+        double x;
+        initialData = line.toDouble(); /*读入字符转转换成double型数值*/
+        x=pow((initialData-average),2);
+        x= x/dataNumber;
+        x=sqrt(x);
+        standardError +=x;
     }
-    ui->tichu_text3->append("第一步:\n"+QString::number(Sum_1,'g',16));
+    ui->tichu_text3->append("标准偏差:\n"+QString::number(standardError,'g',16));
 
-    Sum_1 = Sum_1/(index_initial-1);
-    ui->tichu_text3->append("第二步:\n"+QString::number(Sum_1,'g',16));
-
-    Sum_1 = sqrt(Sum_1);
-    ui->tichu_text3->append("第三步:\n"+QString::number(Sum_1,'g',16));
-    standardError = Sum_1;
-    //以上完成后会得到标准偏差
-
-    //判别，剔除粗大误差
-
-    for(i=0;i<index_initial;i++){
-        Sum_1 =qAbs(initial[i]-Average);
-
-        if(Sum_1>(3*standardError))
-        {
-            initial[i] = 1;
+    //判别
+    in.seek(0);//将当前读取文件指针移动到文件开始
+    while(!in.atEnd()){
+        QString line = in.readLine();
+        double x;
+        initialData = line.toDouble(); /*读入字符转转换成double型数值*/
+        x=qAbs((initialData-average));
+        if(x<=(3*standardError)){
+            in_1<<line<<"\n";
         }
 
     }
-    for(i=0;i<index_initial;i++){
-        if(initial[i]==1){
-            for(j=i;j<index_initial-1;j++){
-                initial[j]=initial[j+1];
-            }
-            i = i-1;
-            index_initial =index_initial-1;
-        }
-    }
-
-
-
 }
+
+
+//下面这个函数使用数组的思想做的，可扩展性不好，
+//函数之前的内容是以前放置在on_tichu_button_clicked()函数里面的
+
+//    double initailData[100]; /*存储最初的数据*/
+//    qint8 index_initialData = 0; /*最初数据存储数组的索引*/
+//    qint8 &index=index_initialData;
+//    qint8 i;//索引
+
+//   打开目标文件并转化成数字之后的格式
+//    QFile file(file_path+"/2017-06-19-1.txt");
+//    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//        qDebug()<<"Can't open the file!"<<endl;
+//    }
+//    QTextStream in(&file);
+//    while(!in.atEnd()){
+//        QString line = in.readLine();
+//        initailData[index_initialData] = line.toDouble(); /*读入字符转转换成double型数值*/
+//        ui->tichu_text2->append(QString::number(initailData[index_initialData],'g',16));
+//        index_initialData+= 1;
+
+//    }
+
+//    tichu(initailData,index);
+//    tichu(initailData,index);
+//    tichu(initailData,index);
+//    ui->tichu_text3->append("剔除后:\n");
+//    for(i=0;i<index;i++)
+//    {
+//        ui->tichu_text3->append(QString::number(initailData[i],'g',16));
+//    }
+
+
+//void Widget::tichu(double *initial, qint8 &index_initial)
+//{
+
+//    qint8 i,j;//循环索引
+//    double Sum=0;//和
+//    double Sum_1=0;//之后算法的中间变量
+//    double standardError=0;//标准误差
+//    double Average=0;  /*平均*/
+//    double d_x=0;//变化量
+//    //求平均值，把和,平均值输出,index_initial = 100
+//    for(i=0;i<index_initial;i++){
+//        Sum += initial[i];
+//    }
+//    Average = Sum/(index_initial);
+//    ui->tichu_text3->append("SUM:\n"+QString::number(Sum,'g',16));
+//    ui->tichu_text3->append("AVERAGE:\n"+QString::number(Average,'g',16));
+
+
+//    //求实验标准偏差
+//    Sum_1 = 0; //初始化Sum
+//    for(i=0;i<index_initial;i++){
+//        d_x = pow((initial[i] - Average),2);
+//        Sum_1 += d_x;
+//    }
+//    ui->tichu_text3->append("第一步:\n"+QString::number(Sum_1,'g',16));
+
+//    Sum_1 = Sum_1/(index_initial-1);
+//    ui->tichu_text3->append("第二步:\n"+QString::number(Sum_1,'g',16));
+
+//    Sum_1 = sqrt(Sum_1);
+//    ui->tichu_text3->append("第三步:\n"+QString::number(Sum_1,'g',16));
+//    standardError = Sum_1;
+//    //以上完成后会得到标准偏差
+
+//    //判别，剔除粗大误差
+
+//    for(i=0;i<index_initial;i++){
+//        Sum_1 =qAbs(initial[i]-Average);
+
+//        if(Sum_1>(3*standardError))
+//        {
+//            initial[i] = 1;
+//        }
+
+//    }
+//    for(i=0;i<index_initial;i++){
+//        if(initial[i]==1){
+//            for(j=i;j<index_initial-1;j++){
+//                initial[j]=initial[j+1];
+//            }
+//            i = i-1;
+//            index_initial =index_initial-1;
+//        }
+//    }
+
+
+
+//}
