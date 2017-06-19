@@ -49,7 +49,7 @@ public:
     double Continue_Get_Number(QString cmd);
 
     //剔除算法部分
-    void tichu(double* initial,qint8 index_initial);
+    void tichu(double* initial, qint8 &index_initial);
 
 private slots:
     void on_bt_Search_clicked();
