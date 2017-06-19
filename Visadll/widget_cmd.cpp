@@ -234,8 +234,8 @@ void Widget::on_tichu_button_clicked()
     }
 
     tichu(initailData,index);
-//    tichu(initailData,index);
-//    tichu(initailData,index);
+    tichu(initailData,index);
+    tichu(initailData,index);
     ui->tichu_text3->append("剔除后:\n");
     for(i=0;i<index;i++)
     {
