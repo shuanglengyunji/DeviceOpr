@@ -60,6 +60,7 @@ void Widget::on_Voltage_Set_clicked()
     ui->filepath->setEnabled(true);
 
     //定时保持按钮使能
+    ui->checkBox_86400s->setEnabled(true);
     ui->checkBox_10000s->setEnabled(true);
     ui->checkBox_1000s->setEnabled(true);
     ui->checkBox_100s->setEnabled(true);
@@ -91,6 +92,7 @@ void Widget::on_CMD_TINTerval_clicked()
     ui->filepath->setEnabled(false);
 
     //定时保持按钮失能
+    ui->checkBox_86400s->setEnabled(false);
     ui->checkBox_10000s->setEnabled(false);
     ui->checkBox_1000s->setEnabled(false);
     ui->checkBox_100s->setEnabled(false);
@@ -188,6 +190,12 @@ void Widget::Timing1()
     {
         if(measure_counter % 10000 == 0)
             Record_Data10000(time);
+    }
+
+    if(state_86400s)
+    {
+        if(measure_counter % 86400 == 0)
+            Record_Data86400(time);
     }
 }
 

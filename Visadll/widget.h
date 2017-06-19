@@ -75,6 +75,8 @@ private slots:
 
     void Record_Data10000(double s); //10000s保存数据函数
 
+    void Record_Data86400(double s); //86400保存数据函数
+
     void on_checkBox_1s_stateChanged(int arg1);
 
     void on_checkBox_10s_stateChanged(int arg1);
@@ -85,9 +87,13 @@ private slots:
 
     void on_checkBox_10000s_stateChanged(int arg1);
 
+    void on_checkBox_86400s_stateChanged(int arg1);
+
     void on_filepath_clicked();
 
     void on_clear_counter_clicked();
+
+
 
 private:
     Ui::Widget *ui;
@@ -111,6 +117,7 @@ private:
     bool state_100s;
     bool state_1000s;
     bool state_10000s;
+    bool state_86400s;
 
     QString file_path;
 

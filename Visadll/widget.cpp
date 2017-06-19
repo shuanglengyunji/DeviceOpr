@@ -14,6 +14,7 @@ Widget::Widget(QWidget *parent) :
     state_100s = false;
     state_1000s = false;
     state_10000s = false;
+    state_86400s = false;
 
     QString file_full = QCoreApplication::applicationFilePath();    //获取路径信息
     QFileInfo fi = QFileInfo(file_full);                            //建立文件信息对象
@@ -223,3 +224,5 @@ void Widget::on_textEdit_Receive_textChanged()
 //       /* Close */
 //       viClose( pInstrHandle);
 //       viClose( rmSession);
+
+
