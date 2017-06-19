@@ -386,14 +386,14 @@
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
+     <x>20</x>
+     <y>0</y>
      <width>421</width>
      <height>411</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -428,6 +428,54 @@
      </property>
      <property name="readOnly">
       <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_3">
+    <attribute name="title">
+     <string>错误数据剔除</string>
+    </attribute>
+    <widget class="QPushButton" name="tichu_button">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>剔除：</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="tichu_text1">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>60</y>
+       <width>141</width>
+       <height>301</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="tichu_text2">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>60</y>
+       <width>141</width>
+       <height>301</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="tichu_text3">
+     <property name="geometry">
+      <rect>
+       <x>293</x>
+       <y>60</y>
+       <width>121</width>
+       <height>301</height>
+      </rect>
      </property>
     </widget>
    </widget>

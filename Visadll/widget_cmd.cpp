@@ -1,6 +1,6 @@
 #include "widget.h"
 #include "ui_widget.h"
-
+#include <QDebug>
 //发送指令不回读
 void Widget::on_bt_SendCMD_clicked()
 {
@@ -207,4 +207,26 @@ void Widget::on_clear_counter_clicked()
     QString str1;
     str1.setNum(measure_counter);
     ui->lineEdit_counter->setText(str1);
+}
+
+//剔除错误数据
+void Widget::on_tichu_button_clicked()
+{
+    qlonglong initalData[100];
+    qint8 index_initialData = 0;
+    QFile file(file_path+"/2017-06-19-1.txt");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug()<<"Can't open the file!"<<endl;
+    }
+    QTextStream in(&file);
+    while( !in.atEnd()){
+        QString line = in.readLine();
+        line.toLongLong();
+        initalData[index_initialData] = line;
+//        qDebug() << line;
+        ui->tichu_text1->append(line);
+        ui->tichu_text2->append(initalData[index_initialData]);
+        index_initialData+= 1;
+
+    }
 }

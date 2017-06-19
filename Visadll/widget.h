@@ -95,6 +95,10 @@ private slots:
 
 
 
+    void on_pushButton_clicked();
+
+    void on_tichu_button_clicked();
+
 private:
     Ui::Widget *ui;
 
