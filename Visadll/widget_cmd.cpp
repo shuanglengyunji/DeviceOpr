@@ -333,10 +333,11 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
 
 }
 
-//剔除错误数据按钮按下
+//性能评定数据按钮按下
 void Widget::on_pushButton_clicked()
 {
     ui->performanceEvaluateOutput->clear();
+    ui->tichu_text3->append("评定每"+QString::number(dataType)+"秒测量数据的性能\n");
     performanceEvaluation(dataType,"test3");
 }
 
@@ -433,7 +434,7 @@ void Widget::performanceEvaluation(int dataType, QString srcFile)
         for(index2=0;index2<3;index2++){
             initialData2[index2] = initialData2[index2+1];
         }
-        ui->performanceEvaluateOutput->append(" "+QString::number(x,'g',16));
+//        ui->performanceEvaluateOutput->append(" "+QString::number(x,'g',16));
     }
     frequencyStability = sqrt(frequencyStability);
     ui->performanceEvaluateOutput->append("频率稳定度:\n"+QString::number(frequencyStability,'g',16));
