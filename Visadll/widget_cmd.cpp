@@ -214,11 +214,8 @@ void Widget::on_clear_counter_clicked()
 void Widget::on_tichu_button_clicked()
 {
 
-
-
-
     double  initialData=0;
-    qint8 dataNumber=0;//数据总数
+    int dataNumber=0;//数据总数
     double standardError=0;//标准偏差
     double average=0;//平均
 
@@ -234,6 +231,7 @@ void Widget::on_tichu_button_clicked()
     QTextStream in(&file);
     QTextStream in_1(&file_1);
 
+    //求数据总数
     while(!in.atEnd()){
         QString line;
         line = in.readLine();
@@ -283,6 +281,8 @@ void Widget::on_tichu_button_clicked()
 
     }
 }
+
+
 
 
 //下面这个函数使用数组的思想做的，可扩展性不好，
