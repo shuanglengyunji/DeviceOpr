@@ -304,9 +304,9 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
         initialData = line.toDouble(); /*读入字符转转换成double型数值*/
         x=pow((initialData-average),2);
         x= x/dataNumber;
-        x=sqrt(x);
         standardError +=x;
     }
+    standardError = sqrt(standardError);
     ui->tichu_text3->append("标准偏差:\n"+QString::number(standardError,'g',16));
 
     //判别
@@ -374,7 +374,8 @@ void Widget::performanceEvaluation(int dataType, QString srcFile)
     double initialData2[4];
     int index=0;//initialData索引
     int index2=0;//initialData2索引
-    double frequencyDeparture;//频率偏差
+    double frequencyStability =0;//频率稳定度
+    double frequencyDeparture =0;//频率偏差
     int dataNumber=0;
     int i;//各种for中的索引
     QString line1;//文本流，定义在这里有特别用处
@@ -422,8 +423,18 @@ void Widget::performanceEvaluation(int dataType, QString srcFile)
     while(!in.atEnd()){
         double x;
         line1 = in.readLine();
-
+        initialData2[3] = line1.toDouble();
+        x=initialData2[3]-(3*initialData2[2])+(3*initialData2[1])-initialData2[0];
+        x = pow(x,2);
+        x = x*(1/(6*pow(dataType,2)*(dataNumber-3)));
+        frequencyStability +=x;
+        for(index2=0;index2<3;index2++){
+            initialData2[index2] = initialData2[index2+1];
+        }
+        ui->performanceEvaluateOutput->append(" "+QString::number(x,'g',16));
     }
+    frequencyStability = sqrt(frequencyStability);
+    ui->performanceEvaluateOutput->append("频率稳定度:\n"+QString::number(frequencyStability,'g',16));
 
 }
 
