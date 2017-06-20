@@ -214,9 +214,13 @@ void Widget::on_clear_counter_clicked()
 //剔除错误数据按钮按下
 void Widget::on_tichu_button_clicked()
 {
+    QDateTime da_time;
+    QString time_str = da_time.currentDateTime().toString("yyyy-MM-dd HH-mm-ss");
+    QString tmp = time_str.left(10);
+
     ui->tichu_text3->clear();
     ui->tichu_text3->append("剔除每"+QString::number(dataType)+"秒的数据\n");
-    tichu("2017-06-19","test1",dataType);
+    tichu(tmp,"test1",dataType);
     tichu("test1","test2",dataType);
     tichu("test2","test3",dataType);
     ui->tichu_text3->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
@@ -337,7 +341,7 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
 void Widget::on_pushButton_clicked()
 {
     ui->performanceEvaluateOutput->clear();
-    ui->tichu_text3->append("评定每"+QString::number(dataType)+"秒测量数据的性能\n");
+    ui->performanceEvaluateOutput->append("评定每"+QString::number(dataType)+"秒测量数据的性能\n");
     performanceEvaluation(dataType,"test3");
 }
 
