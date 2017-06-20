@@ -402,6 +402,7 @@ void Widget::performanceEvaluation(int dataType, QString srcFile)
     line1 = in.readLine();
     initialData[index] = line1.toDouble(); /*读入字符转转换成double型数值*/
     index = !index;
+    frequencyDeparture = 0;
     while(!in.atEnd()){
         double x;
         line1 = in.readLine();
@@ -420,6 +421,7 @@ void Widget::performanceEvaluation(int dataType, QString srcFile)
         line1 = in.readLine();
         initialData2[i] = line1.toDouble();
     }
+    frequencyStability = 0;
     while(!in.atEnd()){
         double x;
         line1 = in.readLine();
