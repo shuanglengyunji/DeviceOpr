@@ -2,6 +2,7 @@
 #include "ui_widget.h"
 #include <QDebug>
 #include <math.h>
+
 //发送指令不回读
 void Widget::on_bt_SendCMD_clicked()
 {
@@ -331,6 +332,102 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
     ui->tichu_text3->append("剔除后数据总数:\n"+QString::number(dataNumber,'g',16));
 
 }
+
+//剔除错误数据按钮按下
+void Widget::on_pushButton_clicked()
+{
+    ui->performanceEvaluateOutput->clear();
+    performanceEvaluation(dataType,"test3");
+}
+
+//性能评定类型选择
+void Widget::on_comboBox_3_currentIndexChanged(int index)
+{
+    switch (index) {
+    case 0:
+        dataType = 1;
+        break;
+    case 1:
+        dataType = 10;
+        break;
+    case 2:
+        dataType = 100;
+        break;
+    case 3:
+        dataType = 1000;
+        break;
+    case 4:
+        dataType = 10000;
+        break;
+    case 5:
+        dataType = 86400;
+        break;
+    default:
+        break;
+    }
+}
+
+//性能评定操作函数
+void Widget::performanceEvaluation(int dataType, QString srcFile)
+{
+    double initialData[2];//用来求取频率偏差的数组
+    double initialData2[4];
+    int index=0;//initialData索引
+    int index2=0;//initialData2索引
+    double frequencyDeparture;//频率偏差
+    int dataNumber=0;
+    int i;//各种for中的索引
+    QString line1;//文本流，定义在这里有特别用处
+    //打开源文件定义文本流
+    QFile file(file_path+"/"+srcFile+"-"+QString::number(dataType)+".txt");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug()<<"Can't open the file!"<<endl;
+    }
+    QTextStream in(&file);
+
+    //头文本
+    ui->performanceEvaluateOutput->append("__________________________________________\n");
+
+    //求数据总数
+    in.seek(0);
+    while(!in.atEnd()){
+        QString line;
+        line = in.readLine();
+        dataNumber += 1;
+    }
+    ui->performanceEvaluateOutput->append("数据总数:"+QString::number(dataNumber,'g',16));
+    //计算相对频率偏差y=(x1-x2)/d_t
+    in.seek(0);
+    line1 = in.readLine();
+    initialData[index] = line1.toDouble(); /*读入字符转转换成double型数值*/
+    index = !index;
+    while(!in.atEnd()){
+        double x;
+        line1 = in.readLine();
+        initialData[index] = line1.toDouble();
+        index = !index;
+        x = qAbs(initialData[!index]-initialData[index]);
+        x = x/dataType;
+        frequencyDeparture += x/dataNumber;
+//        ui->performanceEvaluateOutput->append(QString::number(x,'g',16));
+    }
+    ui->performanceEvaluateOutput->append("相对平均频率偏差:\n"+QString::number(frequencyDeparture,'g',16));
+
+    //计算频率稳定度
+    in.seek(0);
+    for(i=0;i<3;i++){
+        line1 = in.readLine();
+        initialData2[i] = line1.toDouble();
+    }
+    while(!in.atEnd()){
+        double x;
+        line1 = in.readLine();
+
+    }
+
+}
+
+
 
 
 

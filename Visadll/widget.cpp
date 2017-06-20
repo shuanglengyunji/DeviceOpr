@@ -229,3 +229,7 @@ void Widget::on_textEdit_Receive_textChanged()
 
 
 
+
+
+
+

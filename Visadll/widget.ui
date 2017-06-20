@@ -393,7 +393,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -510,7 +510,7 @@
     <attribute name="title">
      <string>性能评定</string>
     </attribute>
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="QTextEdit" name="performanceEvaluateOutput">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -538,12 +538,43 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox_3"/>
+       <widget class="QComboBox" name="comboBox_3">
+        <item>
+         <property name="text">
+          <string>每1s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每10s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每100s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每1000s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每10000s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每86400s数据</string>
+         </property>
+        </item>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton">
         <property name="text">
-         <string>PushButton</string>
+         <string>评定</string>
         </property>
        </widget>
       </item>
