@@ -49,7 +49,8 @@ public:
     double Continue_Get_Number(QString cmd);
 
     //剔除算法部分
-    void tichu(double* initial, qint8 &index_initial);
+    int dataType = 1;//用来存放所要剔除的数据的类型
+    void tichu(QString srcFile,QString trgFile,int dataType);//一共进行3次剔除，dataType用来标识数据是以多大间隔测量的
 
 private slots:
     void on_bt_Search_clicked();
@@ -101,6 +102,10 @@ private slots:
     void on_pushButton_clicked();
 
     void on_tichu_button_clicked();
+
+    //void on_comboBox_2_activated(const QString &arg1);
+
+    void on_comboBox_2_currentIndexChanged(int index);
 
 private:
     Ui::Widget *ui;

@@ -387,7 +387,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>0</y>
+     <y>10</y>
      <width>421</width>
      <height>411</height>
     </rect>
@@ -435,38 +435,119 @@
     <attribute name="title">
      <string>错误数据剔除</string>
     </attribute>
-    <widget class="QPushButton" name="tichu_button">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>剔除：</string>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="tichu_text2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>141</width>
-       <height>301</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QTextEdit" name="tichu_text3">
      <property name="geometry">
       <rect>
-       <x>170</x>
+       <x>20</x>
        <y>60</y>
-       <width>141</width>
+       <width>371</width>
        <height>301</height>
       </rect>
      </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>371</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>   剔除数据类型：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox_2">
+        <item>
+         <property name="text">
+          <string>每1s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每10s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每100s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每1000s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每10000s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每86400s数据</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="tichu_button">
+        <property name="text">
+         <string>剔除</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_4">
+    <attribute name="title">
+     <string>性能评定</string>
+    </attribute>
+    <widget class="QTextEdit" name="textEdit">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>371</width>
+       <height>301</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>371</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>   评定数据类型：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox_3"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>

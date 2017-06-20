@@ -210,20 +210,58 @@ void Widget::on_clear_counter_clicked()
     ui->lineEdit_counter->setText(str1);
 }
 
-//剔除错误数据
+//剔除错误数据按钮按下
 void Widget::on_tichu_button_clicked()
 {
+    ui->tichu_text3->clear();
+    ui->tichu_text3->append("剔除每"+QString::number(dataType)+"秒的数据\n");
+    tichu("2017-06-19","test1",dataType);
+    tichu("test1","test2",dataType);
+    tichu("test2","test3",dataType);
+    ui->tichu_text3->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+}
 
+//剔除类型选择
+void Widget::on_comboBox_2_currentIndexChanged(int index)
+{
+    switch (index) {
+    case 0:
+        dataType = 1;
+        break;
+    case 1:
+        dataType = 10;
+        break;
+    case 2:
+        dataType = 100;
+        break;
+    case 3:
+        dataType = 1000;
+        break;
+    case 4:
+        dataType = 10000;
+        break;
+    case 5:
+        dataType = 86400;
+        break;
+    default:
+        break;
+    }
+}
+
+//剔除错误数据操作函数
+void Widget::tichu(QString srcFile,QString trgFile,int dataType )
+{
     double  initialData=0;
     int dataNumber=0;//数据总数
     double standardError=0;//标准偏差
     double average=0;//平均
+    static int tichuNum=0;//剔除操作执行次数
 
-    QFile file(file_path+"/2017-06-19-1.txt");
+    QFile file(file_path+"/"+srcFile+"-"+QString::number(dataType)+".txt");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug()<<"Can't open the file!"<<endl;
     }
-    QFile file_1(file_path+"/test.txt");
+    QFile file_1(file_path+"/"+trgFile+"-"+QString::number(dataType)+".txt");
     if(!file_1.open(QIODevice::ReadWrite | QIODevice::Text)) {
         qDebug()<<"Can't open the file!"<<endl;
     }
@@ -231,6 +269,10 @@ void Widget::on_tichu_button_clicked()
     QTextStream in(&file);
     QTextStream in_1(&file_1);
 
+    ui->tichu_text3->append("__________________________________________\n");
+    ui->tichu_text3->append("第"+QString::number(tichuNum+1)+"次剔除:\n");
+    tichuNum += 1;
+    tichuNum = tichuNum%3 ;
     //求数据总数
     while(!in.atEnd()){
         QString line;
@@ -238,7 +280,7 @@ void Widget::on_tichu_button_clicked()
         dataNumber += 1;
 
     }
-    ui->tichu_text2->append("数据总数:"+QString::number(dataNumber,'g',16));
+    ui->tichu_text3->append("数据总数:"+QString::number(dataNumber,'g',16));
 
     //求平均值
     in.seek(0);
@@ -247,9 +289,7 @@ void Widget::on_tichu_button_clicked()
         double x;
         initialData = line.toDouble(); /*读入字符转转换成double型数值*/
 //        in_1<<line<<"\n";
-        ui->tichu_text2->append(QString::number(initialData,'g',16));
-
-        //求平均值
+//        ui->tichu_text2->append(QString::number(initialData,'g',16));
         x = initialData/dataNumber;
         average +=x;
     }
@@ -278,10 +318,19 @@ void Widget::on_tichu_button_clicked()
         if(x<=(3*standardError)){
             in_1<<line<<"\n";
         }
-
     }
-}
 
+    //看剔除后总数
+    dataNumber = 0;
+    in_1.seek(0);
+    while(!in_1.atEnd()){
+        QString line;
+        line = in_1.readLine();
+        dataNumber += 1;
+    }
+    ui->tichu_text3->append("剔除后数据总数:\n"+QString::number(dataNumber,'g',16));
+
+}
 
 
 
