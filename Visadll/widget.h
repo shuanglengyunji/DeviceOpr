@@ -48,12 +48,19 @@ public:
     void Continue_Stop();
     double Continue_Get_Number(QString cmd);
 
+    //设置生成剔除文件的起始与终止日期
+    int BeginMonth=1;
+    int BeginDay=1;
+    int EndMonth=1;
+    int EndDay=1;
     //剔除算法部分
     int dataType = 1;//用来存放所要剔除的数据的类型
     void tichu(QString srcFile,QString trgFile,int dataType);//一共进行3次剔除，dataType用来标识数据是以多大间隔测量的
 
     //性能评定算法部分
     void performanceEvaluation(int dataType,QString srcFile);
+
+
 private slots:
     void on_bt_Search_clicked();
 
@@ -110,6 +117,18 @@ private slots:
     void on_comboBox_2_currentIndexChanged(int index);
 
     void on_comboBox_3_currentIndexChanged(int index);
+
+    void on_BeginMonth_valueChanged(int arg1);
+
+    void on_comboBox_4_currentIndexChanged(int index);
+
+    void on_BeginDay_valueChanged(int arg1);
+
+    void on_EndMonth_valueChanged(int arg1);
+
+    void on_EndDay_valueChanged(int arg1);
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::Widget *ui;

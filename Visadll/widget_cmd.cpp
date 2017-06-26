@@ -262,6 +262,12 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
     double average=0;//平均
     static int tichuNum=0;//剔除操作执行次数
 
+
+    ui->tichu_text3->append("__________________________________________\n");
+    ui->tichu_text3->append("第"+QString::number(tichuNum+1)+"次剔除:\n");
+    tichuNum += 1;
+    tichuNum = tichuNum%3 ;
+
     QFile file(file_path+"/"+srcFile+"-"+QString::number(dataType)+".txt");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug()<<"Can't open the file!"<<endl;
@@ -274,10 +280,7 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
     QTextStream in(&file);
     QTextStream in_1(&file_1);
 
-    ui->tichu_text3->append("__________________________________________\n");
-    ui->tichu_text3->append("第"+QString::number(tichuNum+1)+"次剔除:\n");
-    tichuNum += 1;
-    tichuNum = tichuNum%3 ;
+
     //求数据总数
     while(!in.atEnd()){
         QString line;
@@ -334,6 +337,11 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
         dataNumber += 1;
     }
     ui->tichu_text3->append("剔除后数据总数:\n"+QString::number(dataNumber,'g',16));
+
+    //关闭文件
+    file.close();
+    file_1.close();
+
 
 }
 
@@ -443,7 +451,120 @@ void Widget::performanceEvaluation(int dataType, QString srcFile)
     frequencyStability = sqrt(frequencyStability);
     ui->performanceEvaluateOutput->append("频率稳定度:\n"+QString::number(frequencyStability,'g',16));
 
+    file.close();
+
 }
+
+
+//选择生成性能评定文件的类型
+void Widget::on_comboBox_4_currentIndexChanged(int index)
+{
+    switch (index) {
+    case 0:
+        dataType = 1;
+        break;
+    case 1:
+        dataType = 10;
+        break;
+    case 2:
+        dataType = 100;
+        break;
+    case 3:
+        dataType = 1000;
+        break;
+    case 4:
+        dataType = 10000;
+        break;
+    case 5:
+        dataType = 86400;
+        break;
+    default:
+        break;
+    }
+
+}
+
+//改变qspinbox时候改变起始和结束日期
+void Widget::on_BeginMonth_valueChanged(int arg1)
+{
+    BeginMonth = arg1;
+}
+void Widget::on_BeginDay_valueChanged(int arg1)
+{
+    BeginDay = arg1;
+}
+void Widget::on_EndMonth_valueChanged(int arg1)
+{
+    EndMonth = arg1;
+}
+void Widget::on_EndDay_valueChanged(int arg1)
+{
+    EndDay = arg1;
+}
+
+//"生成文件"按钮按下
+void Widget::on_pushButton_2_clicked()
+{
+    int i,j;//循环索引
+    QDateTime da_time;
+    QString time_str = da_time.currentDateTime().toString("yyyy-MM-dd HH-mm-ss");
+    QString tmp = time_str.left(5);
+
+    //生成样本文件夹
+   QDir *temp = new QDir;
+   bool exist = temp->exists(file_path+"/sample");
+   if(exist)
+       ui->samlpe_edit->append("文件夹已经存在！");
+   else
+   {
+       bool ok = temp->mkdir(file_path+"/sample");
+       if( ok )
+           ui->samlpe_edit->append("文件夹创建成功！");
+   }
+   delete temp;
+   ui->samlpe_edit->append("抽取"+QString::number(BeginMonth)+"月"+QString::number(BeginDay)+"日到"+QString::number(EndMonth)+"月"+QString::number(EndDay)+"日的"+QString::number(dataType)+"秒样本");
+
+   //清空原有数据
+   QFile file2(file_path+"/"+"sample/"+"sample-"+QString::number(dataType)+".txt");
+   if(!file2.open(QIODevice::WriteOnly | QIODevice::Text)) {
+       qDebug()<<"Can't open the file1!"<<endl;
+   }
+    //生成sample文件
+   for(i=BeginMonth;i<=EndMonth;i++)
+   {
+       for(j=BeginDay;j<=EndDay;j++)
+       {
+
+
+           QFile file(file_path+"/"+tmp+QString::number(i)+"-"+QString::number(j)+"-"+QString::number(dataType)+".txt");
+           if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+               qDebug()<<"Can't open the file!!"<<endl;
+           }
+           QTextStream in(&file);
+
+
+           QFile file1(file_path+"/"+"sample/"+"sample-"+QString::number(dataType)+".txt");
+           if(!file1.open(QIODevice::WriteOnly | QIODevice::Text|QIODevice::Append)) {
+               qDebug()<<"Can't open the file1!"<<endl;
+           }
+           QTextStream in1(&file1);
+
+           in.seek(0);
+           while(!in.atEnd()){
+               QString line;
+               line = in.readLine();
+               in1<<line<<"\n";
+
+           }
+
+//           file.close();
+//           file1.close();
+
+       }
+   }
+
+}
+
 
 
 
