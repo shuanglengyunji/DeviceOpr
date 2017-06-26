@@ -456,38 +456,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QSpinBox" name="BeginMonth">
-        <property name="maximum">
-         <number>12</number>
-        </property>
-        <property name="value">
-         <number>1</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>月</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QSpinBox" name="BeginDay">
-        <property name="maximum">
-         <number>31</number>
-        </property>
-        <property name="value">
-         <number>30</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>日 </string>
-        </property>
-       </widget>
+       <widget class="QDateEdit" name="BeginDate"/>
       </item>
      </layout>
     </widget>
@@ -515,38 +484,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
-       <widget class="QSpinBox" name="EndMonth">
-        <property name="maximum">
-         <number>12</number>
-        </property>
-        <property name="value">
-         <number>1</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>月</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QSpinBox" name="EndDay">
-        <property name="maximum">
-         <number>31</number>
-        </property>
-        <property name="value">
-         <number>20</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>日</string>
-        </property>
-       </widget>
+       <widget class="QDateEdit" name="EndDate"/>
       </item>
      </layout>
     </widget>
@@ -555,7 +493,7 @@
       <rect>
        <x>20</x>
        <y>10</y>
-       <width>351</width>
+       <width>379</width>
        <height>80</height>
       </rect>
      </property>

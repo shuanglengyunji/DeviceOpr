@@ -214,13 +214,11 @@ void Widget::on_clear_counter_clicked()
 //剔除错误数据按钮按下
 void Widget::on_tichu_button_clicked()
 {
-    QDateTime da_time;
-    QString time_str = da_time.currentDateTime().toString("yyyy-MM-dd HH-mm-ss");
-    QString tmp = time_str.left(10);
+    QString srcFile="sample";
 
     ui->tichu_text3->clear();
     ui->tichu_text3->append("剔除每"+QString::number(dataType)+"秒的数据\n");
-    tichu(tmp,"test1",dataType);
+    tichu(srcFile,"test1",dataType);
     tichu("test1","test2",dataType);
     tichu("test2","test3",dataType);
     ui->tichu_text3->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
@@ -268,11 +266,18 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
     tichuNum += 1;
     tichuNum = tichuNum%3 ;
 
-    QFile file(file_path+"/"+srcFile+"-"+QString::number(dataType)+".txt");
+    QFile file(file_path+"/"+"sample/"+srcFile+"-"+QString::number(dataType)+".txt");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug()<<"Can't open the file!"<<endl;
+        ui->tichu_text3->append("打不开文件或文件不存在:"+file_path+"/"+"sample/"+srcFile+"-"+QString::number(dataType)+".txt");
+        return;
     }
-    QFile file_1(file_path+"/"+trgFile+"-"+QString::number(dataType)+".txt");
+    //清空原有数据
+    QFile file2(file_path+"/"+"sample/"+trgFile+"-"+QString::number(dataType)+".txt");
+    if(!file2.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug()<<"Can't open the file1!"<<endl;
+    }
+    QFile file_1(file_path+"/"+"sample/"+trgFile+"-"+QString::number(dataType)+".txt");
     if(!file_1.open(QIODevice::ReadWrite | QIODevice::Text)) {
         qDebug()<<"Can't open the file!"<<endl;
     }
@@ -393,9 +398,11 @@ void Widget::performanceEvaluation(int dataType, QString srcFile)
     int i;//各种for中的索引
     QString line1;//文本流，定义在这里有特别用处
     //打开源文件定义文本流
-    QFile file(file_path+"/"+srcFile+"-"+QString::number(dataType)+".txt");
+    QFile file(file_path+"/"+"sample/"+srcFile+"-"+QString::number(dataType)+".txt");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug()<<"Can't open the file!"<<endl;
+        ui->performanceEvaluateOutput->append("打不开文件或文件不存在："+file_path+"/"+"sample/"+srcFile+"-"+QString::number(dataType)+".txt");
+        return;
     }
     QTextStream in(&file);
 
@@ -484,31 +491,26 @@ void Widget::on_comboBox_4_currentIndexChanged(int index)
 
 }
 
-//改变qspinbox时候改变起始和结束日期
-void Widget::on_BeginMonth_valueChanged(int arg1)
+//改变改变起始和结束日期
+void Widget::on_BeginDate_dateChanged(const QDate &date)
 {
-    BeginMonth = arg1;
-}
-void Widget::on_BeginDay_valueChanged(int arg1)
-{
-    BeginDay = arg1;
-}
-void Widget::on_EndMonth_valueChanged(int arg1)
-{
-    EndMonth = arg1;
-}
-void Widget::on_EndDay_valueChanged(int arg1)
-{
-    EndDay = arg1;
+    BeginDate = date;
+
 }
 
+void Widget::on_EndDate_dateChanged(const QDate &date)
+{
+    EndDate = date;
+
+}
 //"生成文件"按钮按下
 void Widget::on_pushButton_2_clicked()
 {
-    int i,j;//循环索引
-    QDateTime da_time;
-    QString time_str = da_time.currentDateTime().toString("yyyy-MM-dd HH-mm-ss");
-    QString tmp = time_str.left(5);
+
+
+    QString beginDate = BeginDate.toString("yyyy-MM-dd");
+    QString endDate = EndDate.toString("yyyy-MM-dd");
+    QDate myDate=BeginDate;//循环变量
 
     //生成样本文件夹
    QDir *temp = new QDir;
@@ -522,46 +524,43 @@ void Widget::on_pushButton_2_clicked()
            ui->samlpe_edit->append("文件夹创建成功！");
    }
    delete temp;
-   ui->samlpe_edit->append("抽取"+QString::number(BeginMonth)+"月"+QString::number(BeginDay)+"日到"+QString::number(EndMonth)+"月"+QString::number(EndDay)+"日的"+QString::number(dataType)+"秒样本");
+   ui->samlpe_edit->append("抽取从"+beginDate+"到"+endDate+"的数据");
 
    //清空原有数据
    QFile file2(file_path+"/"+"sample/"+"sample-"+QString::number(dataType)+".txt");
    if(!file2.open(QIODevice::WriteOnly | QIODevice::Text)) {
        qDebug()<<"Can't open the file1!"<<endl;
    }
+
     //生成sample文件
-   for(i=BeginMonth;i<=EndMonth;i++)
+   while (myDate.day()!=(EndDate.day()+1)||myDate.month()!=EndDate.month())
    {
-       for(j=BeginDay;j<=EndDay;j++)
-       {
+       QString srcFile = file_path+"/"+myDate.toString("yyyy-MM-dd")+"-"+QString::number(dataType)+".txt";
 
-
-           QFile file(file_path+"/"+tmp+QString::number(i)+"-"+QString::number(j)+"-"+QString::number(dataType)+".txt");
-           if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-               qDebug()<<"Can't open the file!!"<<endl;
-           }
-           QTextStream in(&file);
-
-
-           QFile file1(file_path+"/"+"sample/"+"sample-"+QString::number(dataType)+".txt");
-           if(!file1.open(QIODevice::WriteOnly | QIODevice::Text|QIODevice::Append)) {
-               qDebug()<<"Can't open the file1!"<<endl;
-           }
-           QTextStream in1(&file1);
-
-           in.seek(0);
-           while(!in.atEnd()){
-               QString line;
-               line = in.readLine();
-               in1<<line<<"\n";
-
-           }
-
-//           file.close();
-//           file1.close();
-
+       QFile file(srcFile);
+       if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+          qDebug()<<"Can't open the file!!"<<endl;
+          ui->samlpe_edit->append("打不开文件或文件不存在:"+srcFile);
        }
+       QTextStream in(&file);
+
+       QFile file1(file_path+"/"+"sample/"+"sample-"+QString::number(dataType)+".txt");
+       if(!file1.open(QIODevice::WriteOnly | QIODevice::Text|QIODevice::Append)) {
+          qDebug()<<"Can't open the file1!"<<endl;
+       }
+       QTextStream in1(&file1);
+
+       in.seek(0);
+       while(!in.atEnd()){
+            QString line;
+            line = in.readLine();
+            in1<<line<<"\n";
+        }
+       myDate = myDate.addDays(1);
    }
+   ui->samlpe_edit->append("文件生成完毕");
+
+
 
 }
 
@@ -570,93 +569,4 @@ void Widget::on_pushButton_2_clicked()
 
 
 
-//下面这个函数使用数组的思想做的，可扩展性不好，
-//函数之前的内容是以前放置在on_tichu_button_clicked()函数里面的
 
-//    double initailData[100]; /*存储最初的数据*/
-//    qint8 index_initialData = 0; /*最初数据存储数组的索引*/
-//    qint8 &index=index_initialData;
-//    qint8 i;//索引
-
-//   打开目标文件并转化成数字之后的格式
-//    QFile file(file_path+"/2017-06-19-1.txt");
-//    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-//        qDebug()<<"Can't open the file!"<<endl;
-//    }
-//    QTextStream in(&file);
-//    while(!in.atEnd()){
-//        QString line = in.readLine();
-//        initailData[index_initialData] = line.toDouble(); /*读入字符转转换成double型数值*/
-//        ui->tichu_text2->append(QString::number(initailData[index_initialData],'g',16));
-//        index_initialData+= 1;
-
-//    }
-
-//    tichu(initailData,index);
-//    tichu(initailData,index);
-//    tichu(initailData,index);
-//    ui->tichu_text3->append("剔除后:\n");
-//    for(i=0;i<index;i++)
-//    {
-//        ui->tichu_text3->append(QString::number(initailData[i],'g',16));
-//    }
-
-
-//void Widget::tichu(double *initial, qint8 &index_initial)
-//{
-
-//    qint8 i,j;//循环索引
-//    double Sum=0;//和
-//    double Sum_1=0;//之后算法的中间变量
-//    double standardError=0;//标准误差
-//    double Average=0;  /*平均*/
-//    double d_x=0;//变化量
-//    //求平均值，把和,平均值输出,index_initial = 100
-//    for(i=0;i<index_initial;i++){
-//        Sum += initial[i];
-//    }
-//    Average = Sum/(index_initial);
-//    ui->tichu_text3->append("SUM:\n"+QString::number(Sum,'g',16));
-//    ui->tichu_text3->append("AVERAGE:\n"+QString::number(Average,'g',16));
-
-
-//    //求实验标准偏差
-//    Sum_1 = 0; //初始化Sum
-//    for(i=0;i<index_initial;i++){
-//        d_x = pow((initial[i] - Average),2);
-//        Sum_1 += d_x;
-//    }
-//    ui->tichu_text3->append("第一步:\n"+QString::number(Sum_1,'g',16));
-
-//    Sum_1 = Sum_1/(index_initial-1);
-//    ui->tichu_text3->append("第二步:\n"+QString::number(Sum_1,'g',16));
-
-//    Sum_1 = sqrt(Sum_1);
-//    ui->tichu_text3->append("第三步:\n"+QString::number(Sum_1,'g',16));
-//    standardError = Sum_1;
-//    //以上完成后会得到标准偏差
-
-//    //判别，剔除粗大误差
-
-//    for(i=0;i<index_initial;i++){
-//        Sum_1 =qAbs(initial[i]-Average);
-
-//        if(Sum_1>(3*standardError))
-//        {
-//            initial[i] = 1;
-//        }
-
-//    }
-//    for(i=0;i<index_initial;i++){
-//        if(initial[i]==1){
-//            for(j=i;j<index_initial-1;j++){
-//                initial[j]=initial[j+1];
-//            }
-//            i = i-1;
-//            index_initial =index_initial-1;
-//        }
-//    }
-
-
-
-//}

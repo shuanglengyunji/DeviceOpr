@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QDateTime>
+#include <QDate>
 
 #include "measurethread.h"
 
@@ -49,10 +50,8 @@ public:
     double Continue_Get_Number(QString cmd);
 
     //设置生成剔除文件的起始与终止日期
-    int BeginMonth=1;
-    int BeginDay=1;
-    int EndMonth=1;
-    int EndDay=1;
+    QDate BeginDate;
+    QDate EndDate;
     //剔除算法部分
     int dataType = 1;//用来存放所要剔除的数据的类型
     void tichu(QString srcFile,QString trgFile,int dataType);//一共进行3次剔除，dataType用来标识数据是以多大间隔测量的
@@ -129,6 +128,10 @@ private slots:
     void on_EndDay_valueChanged(int arg1);
 
     void on_pushButton_2_clicked();
+
+    void on_BeginDate_dateChanged(const QDate &date);
+
+    void on_EndDate_dateChanged(const QDate &date);
 
 private:
     Ui::Widget *ui;
