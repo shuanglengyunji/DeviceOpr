@@ -123,6 +123,8 @@ private slots:
 
     void on_EndDate_dateChanged(const QDate &date);
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Widget *ui;
 

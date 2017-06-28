@@ -252,3 +252,8 @@ void Widget::on_textEdit_Receive_textChanged()
 
 
 
+
+void Widget::on_pushButton_3_clicked()
+{
+    QMessageBox::information(this,"关于","开发人员：刘涵、高觊");
+}
