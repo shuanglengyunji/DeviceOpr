@@ -111,21 +111,11 @@ private slots:
 
     void on_tichu_button_clicked();
 
-    //void on_comboBox_2_activated(const QString &arg1);
-
     void on_comboBox_2_currentIndexChanged(int index);
 
     void on_comboBox_3_currentIndexChanged(int index);
 
-    void on_BeginMonth_valueChanged(int arg1);
-
     void on_comboBox_4_currentIndexChanged(int index);
-
-    void on_BeginDay_valueChanged(int arg1);
-
-    void on_EndMonth_valueChanged(int arg1);
-
-    void on_EndDay_valueChanged(int arg1);
 
     void on_pushButton_2_clicked();
 

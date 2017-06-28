@@ -145,7 +145,7 @@ void Widget::Timing1()
 {
     double time = Continue_Get_Number("READ?");
 
-    if(time>0.001 && time<1)    //只接受1ms~1s之间的值
+    if(time>0.0 && time<1)    //只接受1ms~1s之间的值
     {
         QString str = QString("time interval: %1").arg(time, 0,'r',16); //最大能够达到16位精度（返回数据的精度是16位）
         ui->textEdit_Receive->append(str);  //.arg(retCount)的作用是格式化输出，意思在%1的地方输出retCount
@@ -277,6 +277,7 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
     if(!file2.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug()<<"Can't open the file1!"<<endl;
     }
+    /////////////////////////////////////////////////////////////////////////////////
     QFile file_1(file_path+"/"+"sample/"+trgFile+"-"+QString::number(dataType)+".txt");
     if(!file_1.open(QIODevice::ReadWrite | QIODevice::Text)) {
         qDebug()<<"Can't open the file!"<<endl;
@@ -301,8 +302,6 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
         QString line = in.readLine();
         double x;
         initialData = line.toDouble(); /*读入字符转转换成double型数值*/
-//        in_1<<line<<"\n";
-//        ui->tichu_text2->append(QString::number(initialData,'g',16));
         x = initialData/dataNumber;
         average +=x;
     }
@@ -330,6 +329,9 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
         x=qAbs((initialData-average));
         if(x<=(3*standardError)){
             in_1<<line<<"\n";
+        }
+        else{
+            ui->tichu_text3->append("剔除 "+QString::number(initialData,'g',16));
         }
     }
 
@@ -524,7 +526,7 @@ void Widget::on_pushButton_2_clicked()
            ui->samlpe_edit->append("文件夹创建成功！");
    }
    delete temp;
-   ui->samlpe_edit->append("抽取从"+beginDate+"到"+endDate+"的数据");
+   ui->samlpe_edit->append("抽取从"+beginDate+"到"+endDate+"每"+QString::number(dataType)+"秒"+"的数据");
 
    //清空原有数据
    QFile file2(file_path+"/"+"sample/"+"sample-"+QString::number(dataType)+".txt");
