@@ -68,6 +68,7 @@ void Widget::on_Voltage_Set_clicked()
     ui->checkBox_100s->setEnabled(true);
     ui->checkBox_10s->setEnabled(true);
     ui->checkBox_1s->setEnabled(true);
+    ui->checkBox_300s->setEnabled(true);
 
     //测量计数器使能
     ui->clear_counter->setEnabled(true);
@@ -100,6 +101,7 @@ void Widget::on_CMD_TINTerval_clicked()
     ui->checkBox_100s->setEnabled(false);
     ui->checkBox_10s->setEnabled(false);
     ui->checkBox_1s->setEnabled(false);
+    ui->checkBox_300s->setEnabled(false);
 
     //测量计数器失能
     ui->clear_counter->setEnabled(false);
