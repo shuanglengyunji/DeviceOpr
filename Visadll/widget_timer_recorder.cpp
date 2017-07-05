@@ -182,6 +182,28 @@ void Widget::Record_Data86400(double s)
     file.close();
 }
 
+void Widget::Record_Data300(double s)
+{
+    //获取当前时间
+    QDateTime da_time;
+    QString time_str = da_time.currentDateTime().toString("yyyy-MM-dd HH-mm-ss");
+    QString tmp = time_str.left(10);
+
+    //建立、打开文件
+    QString fileName = file_path + "/" + tmp + "-300.txt";
+    QFile file(fileName);
+    if(!file.open(QIODevice::WriteOnly  | QIODevice::Text|QIODevice::Append))   //打开文件
+    {
+      QMessageBox::warning(this,"sdf","can't open",QMessageBox::Yes);
+    }
+
+    QTextStream in(&file);
+    QString str = QString("%1").arg(s, 0,'r',16); //最大能够达到16位精度（返回数据的精度是16位）
+    in << str + "\n";
+
+    file.close();
+}
+
 void Widget::on_checkBox_1s_stateChanged(int arg1)
 {
     state_1s = arg1;

@@ -204,7 +204,7 @@ void Widget::Timing1()
     if(state_300s)
     {
         if(measure_counter % 300 == 0)
-            Record_Data10000(time);
+            Record_Data300(time);
     }
 }
 

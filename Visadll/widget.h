@@ -88,6 +88,7 @@ private slots:
     void Record_Data10000(double s); //10000s保存数据函数
 
     void Record_Data86400(double s); //86400保存数据函数
+    void Record_Data300(double s); //86400保存数据函数
 
     void on_checkBox_1s_stateChanged(int arg1);
 
