@@ -211,6 +211,11 @@ void Widget::on_checkBox_86400s_stateChanged(int arg1)
 {
     state_86400s = arg1;
 }
+
+void Widget::on_checkBox_300s_stateChanged(int arg1)
+{
+    state_300s = arg1;
+}
 //void MainWindow::on_pushButton_clicked()
 //{
 //    QDateTime da_time;

@@ -199,6 +199,11 @@ void Widget::Timing1()
         if(measure_counter % 86400 == 0)
             Record_Data86400(time);
     }
+    if(state_300s)
+    {
+        if(measure_counter % 300 == 0)
+            Record_Data10000(time);
+    }
 }
 
 //清零测量次数统计
@@ -238,12 +243,15 @@ void Widget::on_comboBox_2_currentIndexChanged(int index)
         dataType = 100;
         break;
     case 3:
-        dataType = 1000;
+        dataType = 300;
         break;
     case 4:
-        dataType = 10000;
+        dataType = 1000;
         break;
     case 5:
+        dataType = 10000;
+        break;
+    case 6:
         dataType = 86400;
         break;
     default:
@@ -314,7 +322,7 @@ void Widget::tichu(QString srcFile,QString trgFile,int dataType )
         double x;
         initialData = line.toDouble(); /*读入字符转转换成double型数值*/
         x=pow((initialData-average),2);
-        x= x/dataNumber;
+        x= x/(dataNumber-1);
         standardError +=x;
     }
     standardError = sqrt(standardError);
@@ -374,12 +382,15 @@ void Widget::on_comboBox_3_currentIndexChanged(int index)
         dataType = 100;
         break;
     case 3:
-        dataType = 1000;
+        dataType = 300;
         break;
     case 4:
-        dataType = 10000;
+        dataType = 1000;
         break;
     case 5:
+        dataType = 10000;
+        break;
+    case 6:
         dataType = 86400;
         break;
     default:
@@ -432,7 +443,7 @@ void Widget::performanceEvaluation(int dataType, QString srcFile)
         index = !index;
         x = qAbs(initialData[!index]-initialData[index]);
         x = x/dataType;
-        frequencyDeparture += x/dataNumber;
+        frequencyDeparture += x/(dataNumber-1);
 //        ui->performanceEvaluateOutput->append(QString::number(x,'g',16));
     }
     ui->performanceEvaluateOutput->append("相对平均频率偏差:\n"+QString::number(frequencyDeparture,'g',16));
@@ -479,12 +490,15 @@ void Widget::on_comboBox_4_currentIndexChanged(int index)
         dataType = 100;
         break;
     case 3:
-        dataType = 1000;
+        dataType = 300;
         break;
     case 4:
-        dataType = 10000;
+        dataType = 1000;
         break;
     case 5:
+        dataType = 10000;
+        break;
+    case 6:
         dataType = 86400;
         break;
     default:
@@ -535,13 +549,14 @@ void Widget::on_pushButton_2_clicked()
    }
 
     //生成sample文件
-   while (myDate.day()!=(EndDate.day()+1)||myDate.month()!=EndDate.month())
+   EndDate=EndDate.addDays(1);
+   while (myDate.day()!=(EndDate.day())||myDate.month()!=EndDate.month())
    {
        QString srcFile = file_path+"/"+myDate.toString("yyyy-MM-dd")+"-"+QString::number(dataType)+".txt";
 
        QFile file(srcFile);
        if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-          qDebug()<<"Can't open the file!!"<<endl;
+          qDebug()<<"Can't open the file!1!"<<endl;
           ui->samlpe_edit->append("打不开文件或文件不存在:"+srcFile);
        }
        QTextStream in(&file);

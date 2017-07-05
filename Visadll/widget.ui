@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>834</width>
-    <height>429</height>
+    <width>840</width>
+    <height>468</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -90,7 +90,7 @@
    <property name="geometry">
     <rect>
      <x>450</x>
-     <y>360</y>
+     <y>390</y>
      <width>371</width>
      <height>54</height>
     </rect>
@@ -272,20 +272,10 @@
      <x>450</x>
      <y>310</y>
      <width>371</width>
-     <height>41</height>
+     <height>62</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QCheckBox" name="checkBox_1000s">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>数据（1000s）</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="QCheckBox" name="checkBox_10s">
       <property name="enabled">
@@ -293,16 +283,6 @@
       </property>
       <property name="text">
        <string>数据（10s）</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QCheckBox" name="checkBox_10000s">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>数据（10000s）</string>
       </property>
      </widget>
     </item>
@@ -326,13 +306,43 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
+    <item row="2" column="0">
      <widget class="QCheckBox" name="checkBox_86400s">
       <property name="enabled">
        <bool>false</bool>
       </property>
       <property name="text">
        <string>数据（86400s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QCheckBox" name="checkBox_10000s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>数据（10000s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QCheckBox" name="checkBox_1000s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>数据（1000s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="checkBox_300s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>数据（300s）</string>
       </property>
      </widget>
     </item>
@@ -393,7 +403,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -524,6 +534,11 @@
         </item>
         <item>
          <property name="text">
+          <string>每300s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>每1000s数据</string>
          </property>
         </item>
@@ -595,6 +610,11 @@
         <item>
          <property name="text">
           <string>每100s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每300s数据</string>
          </property>
         </item>
         <item>
@@ -674,6 +694,11 @@
         </item>
         <item>
          <property name="text">
+          <string>每300s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>每1000s数据</string>
          </property>
         </item>
@@ -727,7 +752,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>400</y>
+     <y>410</y>
      <width>75</width>
      <height>23</height>
     </rect>

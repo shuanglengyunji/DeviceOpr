@@ -125,6 +125,8 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_checkBox_300s_stateChanged(int arg1);
+
 private:
     Ui::Widget *ui;
 
@@ -148,6 +150,7 @@ private:
     bool state_1000s;
     bool state_10000s;
     bool state_86400s;
+    bool state_300s;
 
     QString file_path;
 
