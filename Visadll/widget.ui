@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>832</width>
-    <height>429</height>
+    <width>840</width>
+    <height>468</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -90,7 +90,7 @@
    <property name="geometry">
     <rect>
      <x>450</x>
-     <y>360</y>
+     <y>390</y>
      <width>371</width>
      <height>54</height>
     </rect>
@@ -272,20 +272,10 @@
      <x>450</x>
      <y>310</y>
      <width>371</width>
-     <height>41</height>
+     <height>62</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QCheckBox" name="checkBox_1000s">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>数据（1000s）</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="QCheckBox" name="checkBox_10s">
       <property name="enabled">
@@ -293,16 +283,6 @@
       </property>
       <property name="text">
        <string>数据（10s）</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QCheckBox" name="checkBox_10000s">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>数据（10000s）</string>
       </property>
      </widget>
     </item>
@@ -323,6 +303,46 @@
       </property>
       <property name="text">
        <string>数据（1s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="checkBox_86400s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>数据（86400s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QCheckBox" name="checkBox_10000s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>数据（10000s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QCheckBox" name="checkBox_1000s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>数据（1000s）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="checkBox_300s">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>数据（300s）</string>
       </property>
      </widget>
     </item>
@@ -376,14 +396,14 @@
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>10</y>
      <width>421</width>
-     <height>411</height>
+     <height>391</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -395,7 +415,7 @@
        <x>10</x>
        <y>10</y>
        <width>391</width>
-       <height>371</height>
+       <height>341</height>
       </rect>
      </property>
     </widget>
@@ -413,12 +433,295 @@
        <x>10</x>
        <y>10</y>
        <width>391</width>
-       <height>371</height>
+       <height>341</height>
       </rect>
      </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_5">
+    <attribute name="title">
+     <string>生成剔除文件</string>
+    </attribute>
+    <widget class="QTextEdit" name="samlpe_edit">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>170</y>
+       <width>371</width>
+       <height>191</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>160</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QDateEdit" name="BeginDate"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>95</y>
+       <width>31</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>至</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>80</y>
+       <width>160</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QDateEdit" name="EndDate"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>379</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>请选择生成日期及类型并点击生成：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox_4">
+        <item>
+         <property name="text">
+          <string>每1s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每10s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每100s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每300s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每1000s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每10000s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每86400s数据</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>生成文件</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_3">
+    <attribute name="title">
+     <string>数据剔除</string>
+    </attribute>
+    <widget class="QTextEdit" name="tichu_text3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>371</width>
+       <height>301</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>371</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>   剔除数据类型：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox_2">
+        <item>
+         <property name="text">
+          <string>每1s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每10s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每100s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每300s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每1000s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每10000s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每86400s数据</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="tichu_button">
+        <property name="text">
+         <string>剔除</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_4">
+    <attribute name="title">
+     <string>性能评定</string>
+    </attribute>
+    <widget class="QTextEdit" name="performanceEvaluateOutput">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>371</width>
+       <height>301</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>371</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>   评定数据类型：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox_3">
+        <item>
+         <property name="text">
+          <string>每1s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每10s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每100s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每300s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每1000s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每10000s数据</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>每86400s数据</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>评定</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
@@ -443,6 +746,19 @@
    </property>
    <property name="text">
     <string>Search Device</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>410</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>关于</string>
    </property>
   </widget>
  </widget>

@@ -14,6 +14,8 @@ Widget::Widget(QWidget *parent) :
     state_100s = false;
     state_1000s = false;
     state_10000s = false;
+    state_86400s = false;
+    state_300s = false;
 
     QString file_full = QCoreApplication::applicationFilePath();    //获取路径信息
     QFileInfo fi = QFileInfo(file_full);                            //建立文件信息对象
@@ -223,3 +225,39 @@ void Widget::on_textEdit_Receive_textChanged()
 //       /* Close */
 //       viClose( pInstrHandle);
 //       viClose( rmSession);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void Widget::on_pushButton_3_clicked()
+{
+    QMessageBox::information(this,"关于","    本软件用途为测量两路秒信号的时间间隔和相关数据分析。\n    工作方式为协同Keysight 53230A频率计进行时间数据的精确采集，\
+通过内置算法对所采数据进行分析运算。\n    开发人员：仲崇霞、刘涵、高觊");
+}
+
+
